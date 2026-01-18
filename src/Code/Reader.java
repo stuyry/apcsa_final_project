@@ -4,14 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ReadTheInputs { //decided against making this abstract because when I am extending I am not calling constructor again, so that would be stupid
-    private final BufferedReader read;;
+public class Reader { //decided against making this abstract because when I am extending I am not calling constructor again, so that would be stupid
+    private final BufferedReader read;
+    //Im not really accounting for nextLine in my code, but all of the inputs I am asking for are one liners, and I print something inbetween them if that makes sense
     private String input = "";
 
     // public ReadTheInputs() {
     //     read = new BufferedReader(null);
     // }
-    public ReadTheInputs() { //My take on Competitive coding (USACO) Kattio class except without looking at it
+    public Reader() { //My take on Competitive coding (USACO) Kattio class except without looking at it
         read = new BufferedReader(new InputStreamReader(System.in));
         try {
             input = read.readLine(); //TODO: ensure that input is getting this value
@@ -36,5 +37,4 @@ public class ReadTheInputs { //decided against making this abstract because when
         //Mainly added for my ease so that when I am inplementing methods in other classes and I am going through the list of what I can use, I just don't get confused
     }
 
-    //In theory when I
 }
