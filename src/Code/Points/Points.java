@@ -1,9 +1,9 @@
 package Code.Points;
 
-public abstract class Points2 {
+public abstract class Points {
     //private long points;
 
     public abstract long getPoints();
     public abstract void setPoints(long points);
-    public abstract long determineStrength();
+    //public abstract long determineStrength(); //TODO: uncomment later
 }
