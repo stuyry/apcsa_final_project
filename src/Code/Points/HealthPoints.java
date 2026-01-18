@@ -1,6 +1,6 @@
 package Code.Points;
 
-public class HealthPoints extends Points {
+public class HealthPoints extends Points2 {
     private long HP;
 
     @Override
