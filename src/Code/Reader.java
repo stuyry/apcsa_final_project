@@ -31,22 +31,33 @@ public class Reader { //decided against making this abstract because when I am e
         boolean retryAgain = true;
         //TODO: (RESOLVED) Make abstract and put in methods where we need to deal with integers that they input
         //Could've given it name of points given but I need to see how this project develops
-        while(retryAgain) {
+        //while(retryAgain) {
             try {
-                retryAgain = false; //theoretically this should be skipped because the error would be given from the code above
-                System.out.print("CONFIRM INPUT: ");
-                toReturn = Integer.parseInt(new Reader().getInput());
+              //  retryAgain = false; //theoretically this should be skipped because the error would be given from the code above
+                //System.out.print("CONFIRM INPUT: ");
+                toReturn = Integer.parseInt(getInput());
             } 
             catch (Exception e) {
-                System.err.println("Incorrect input format, please try again: ");
+                System.err.print("Incorrect input format, please try again: ");
+                while(retryAgain) {
+                    try {
+                        retryAgain = false;
+                        toReturn = Integer.parseInt(new Reader().getInput());
+                    } 
+                    catch (Exception a) {
+                        System.err.println("Incorrect input format, please try again: ");
+                    }
+                    finally {
+                        if (toReturn == -1) {
+                            retryAgain = true;
+                        }
+                     }
+                    
+                }
                 //retryAgain = true; //creates infinite loop
             }
-            finally {
-                if (toReturn == -1) {
-                    retryAgain = true;
-                }
-            }
-        }
+            
+        //}
 
         return toReturn;
     }
