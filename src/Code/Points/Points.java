@@ -5,6 +5,7 @@ public abstract class Points {
     //private long points;
     private long creditsApplied; //this is credits applied
     private State state;
+    private long randomValue;
     //private long actualValue;
 
 
@@ -24,6 +25,14 @@ public abstract class Points {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public long getRandomValue() {
+        return randomValue;
+    }
+
+    public void setRandomValue(long randomValue) {
+        this.randomValue = randomValue;
     }
 
     // public String getStateAsString() { //not necessary when I can do "" + getState() + ""

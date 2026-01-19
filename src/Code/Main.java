@@ -13,6 +13,14 @@ public class Main {
     static Credits credit = new Credits();
     static Supplier<Integer> credits = () -> credit.getCredits();
 
+    static HealthPoints healthPoints = new HealthPoints(); //OBJECTS SO I CAN ACCESS STATES AND ACTUAL VALUES (obvious)
+    static DamagePoints damagePoints = new DamagePoints();
+    static DefensePoints defensePoints = new DefensePoints();
+    static LuckPoints luckPoints = new LuckPoints();
+    static MagicPoints magicPoints = new MagicPoints();
+
+    static String name = "";
+
     public void setCreditsFromMain(Integer setValue) { //in the end i want these two methods to be only static but that's just being picky
         credit.setCredits(setValue);
     }
@@ -21,20 +29,25 @@ public class Main {
         return credit.getCredits(); //used to be credits.get() (supplier) 
     } //works properly
 
-    String[] allValues = new String[1]; // TODO: fill in with all the values inputted, then loop through it to show user everything they put in
+     // TODO: fill in with all the values inputted, then loop through it to show user everything they put in
     //TODO: make it so that if a String is inputted where a string is, then they must reinput.
     public static void main(String[] args) {
+        System.out.println("Name your character!");
+        name = new Reader().getInputAsString();
+        System.out.println("Name entered: " + name + "");
+        System.out.print("\n"); 
         System.out.println("Starting credits: " + credits.get() + "");
-        new HealthPoints().sequence();
+        healthPoints.sequence();
         System.out.println("Current amount of credits left: " + credits.get() + "");
-        new DamagePoints().sequence(); //simplified
+        damagePoints.sequence(); //simplified
         System.out.println("Current amount of credits left: " + credits.get() + "");
-        new DefensePoints().sequence();
+        defensePoints.sequence();
         System.out.println("Current amount of credits left: " + credits.get() + "");
-        new LuckPoints().sequence();
+        luckPoints.sequence();
         System.out.println("Current amount of credits left: " + credits.get() + "");
-        new MagicPoints().sequence();
+        magicPoints.sequence();
         System.out.println("Current amount of credits left: " + credits.get() + "");
+        new Character(null, 0, null, 0, null, 0, null, 0, null, 0, null);
 
         
         // System.out.print("" + credits.get() + ""); //CLEARLY SUPPLIER WORKS, WHY AM I GETTING SO MANY ISSUES THEN :(

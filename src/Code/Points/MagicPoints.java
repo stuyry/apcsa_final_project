@@ -4,13 +4,17 @@ import Code.Main;
 import Code.Reader;
 
 public class MagicPoints extends Points {
+   static long randomValue = (long) (Math.random() * 30); //simplest way (avoids max being surpassed (50))
+    
+    
     @Override
-    public void applyState() { 
-        
-        if (getPoints() < 10) { //make limits random
+    public void applyState() { //really wanted to make this a constructor but I realized that when I make the object, the applied credits is null/0 and it constantly sets it to Weak/25
+        setRandomValue(randomValue);
+
+        if (getPoints() <= getRandomValue()) { //make limits random
             setState(State.LOW);
         } 
-        else if (getPoints() < 20) {
+        else if (getPoints() <= getRandomValue() + 15) {
             setState(State.MEDIUM);
         }
         else {
@@ -18,6 +22,7 @@ public class MagicPoints extends Points {
         }
         
     }
+
     @Override
     public long getActualValue() { 
         return getState().getActualValue(); 
@@ -26,6 +31,7 @@ public class MagicPoints extends Points {
 
     @Override
     public void sequence() {
+        
         int points = 0;
         System.out.print("Apply Credits towards MAG here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure
         System.out.print("Credit input for Magic: ");

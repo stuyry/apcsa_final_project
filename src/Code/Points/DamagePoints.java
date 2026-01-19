@@ -4,14 +4,17 @@ import Code.Main;
 import Code.Reader;
 
 public class DamagePoints extends Points {
+    static long randomValue = (long) (Math.random() * 30); //simplest way (avoids max being surpassed (50))
+    
     
     @Override
     public void applyState() { //really wanted to make this a constructor but I realized that when I make the object, the applied credits is null/0 and it constantly sets it to Weak/25
-        
-        if (getPoints() < 10) { //make limits random
+        setRandomValue(randomValue);
+
+        if (getPoints() <= getRandomValue()) { //make limits random
             setState(State.LOW);
         } 
-        else if (getPoints() < 20) {
+        else if (getPoints() <= getRandomValue() + 15) {
             setState(State.MEDIUM);
         }
         else {
@@ -31,6 +34,8 @@ public class DamagePoints extends Points {
 
     @Override
     public void sequence() {
+        System.out.println(randomValue);
+
         int points = 0;
         System.out.print("Apply Credits towards DMG here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure
         System.out.print("Credit input for damage: ");
