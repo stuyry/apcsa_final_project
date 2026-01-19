@@ -1,55 +1,48 @@
 package Code.Points;
 
 public class DamagePoints implements Points {
-    private long dmgCreditsApplied; //this is credits applied
-    private damageStrength strength;
+    private long creditsApplied; //this is credits applied
+    private State state;
+    private long actualValue;
 
 
     @Override
     public long getPoints() { //this will show them the credits applied
-        return dmgCreditsApplied;
+        return creditsApplied;
     }
 
     @Override
-    public void setPoints(long dmgCreditsApplied) { //user will input this
-        this.dmgCreditsApplied = dmgCreditsApplied;
+    public void setPoints(long creditsApplied) { //user will input this
+        this.creditsApplied = creditsApplied;
     }
 
-    public enum damageStrength { //this will be used to acheive the level
-        WEAK(25),
-        STRONG(50), //UPDATE THESE VALUES AS A FRACTION OF HP
-        MAX(100); //THIS SEEMS BALANCED
-
-        private long damageStrength;
-
-        private damageStrength(long damageStrength) {
-            this.damageStrength = damageStrength;
-        }
-
-        public long getDamageStrength() {
-            return damageStrength;
-        }
-    }
-
-    public damageStrength getStrength() { //this computes the level
-        //TODO: put this in the constructor??
-        if (dmgCreditsApplied < 10) { //make limits random
-            strength = damageStrength.WEAK;
+    @Override
+    public void applyState() { //really wanted to make this a constructor but I realized that when I make the object, the applied credits is null/0 and it constantly sets it to Weak/25
+        if (creditsApplied < 10) { //make limits random
+            state = State.LOW;
         } 
-        else if (dmgCreditsApplied < 20) {
-            strength = damageStrength.STRONG;
+        else if (creditsApplied < 20) {
+            state = State.MEDIUM;
         }
-        strength = damageStrength.MAX;
-
-        return strength;
+        else {
+            state = State.MAX;
+        }
+        
     }
 
-    public String stringStrength() { //this shows the level
-        return ("" + getStrength() + "");
+    @Override
+    public State getState() {
+        return state;
     }
-    
-    public long getDmg() {
-        return getStrength().getDamageStrength();
+
+    // public String getStateAsString() { //not necessary when I can do "" + getState() + ""
+    //     return "" + state + "";
+    // }
+
+    @Override
+    public long getActualValue() {
+        return state.getActualValue(); 
+        //TODO: add conversion factor and change the Points, maybe 1 2 3, might do switch??
     }
-    
+
 }
