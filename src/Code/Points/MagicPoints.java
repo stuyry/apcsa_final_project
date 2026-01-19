@@ -1,5 +1,6 @@
 package Code.Points;
 
+import Code.Main;
 import Code.Reader;
 
 public class MagicPoints extends Points {
@@ -25,9 +26,16 @@ public class MagicPoints extends Points {
 
     @Override
     public void sequence() {
+        int points = 0;
         System.out.print("Apply Credits towards MAG here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure
         System.out.print("Credit input for Magic: ");
-        setPoints(new Reader().getInputAsInt()); //IT WORKED!!
+        points = new Reader().getInputAsInt();
+
+        Integer points2 = points;
+
+        setPoints(points); //IT WORKED!!
+        new Main().setCreditsFromMain(new Main().getCreditsFromMain() - points2);
+
         System.out.print("\n");
         System.out.print("RECEIVED: ");
         System.out.println("" + getPoints() + "");

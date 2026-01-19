@@ -1,5 +1,6 @@
 package Code.Points;
 
+import Code.Main;
 import Code.Reader;
 
 public class DamagePoints extends Points {
@@ -30,9 +31,16 @@ public class DamagePoints extends Points {
 
     @Override
     public void sequence() {
+        int points = 0;
         System.out.print("Apply Credits towards DMG here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure
         System.out.print("Credit input for damage: ");
-        setPoints(new Reader().getInputAsInt()); //IT WORKED!!
+        points = new Reader().getInputAsInt();
+
+        Integer points2 = points;
+
+        setPoints(points); //IT WORKED!!
+        new Main().setCreditsFromMain(new Main().getCreditsFromMain() - points2);
+
         System.out.print("\n");
         System.out.print("RECEIVED: ");
         System.out.println("" + getPoints() + "");
@@ -42,6 +50,8 @@ public class DamagePoints extends Points {
         System.out.print("Damage you will deal per Attack: ");
         System.out.println("" + getActualValue() + "");
         System.out.print("\n");
+
+        //System.out.println(new Main().getCreditsFromMain());//TODO: RESOLVED temp
     }
 
 }

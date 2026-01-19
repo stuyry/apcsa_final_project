@@ -5,6 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Reader { //decided against making this abstract because when I am extending I am not calling constructor again, so that would be stupid
+    // static Credits credit = new Credits(); //Supplier stuff / Credit stuff
+    // static Supplier<Integer> crediter = () -> credit.getCredits(); //Supplier stuff / Credits stuff 
+    //DONT NEED ANYMORE WITH THE METHODS IN MAIN
+
+
+    Main main = new Main();
+
     private final BufferedReader read;
     //Im not really accounting for nextLine in my code, but all of the inputs I am asking for are one liners, and I print something inbetween them if that makes sense
     private String input = "";
@@ -27,8 +34,11 @@ public class Reader { //decided against making this abstract because when I am e
         //value given automatically by constructor, so use this method then dot notation in etc
     }
     public int getInputAsInt() { 
-        int toReturn = -1;
-        boolean retryAgain = true;
+        int toReturn = -1; //initialized
+        boolean retryAgain = true; //obv
+        boolean isErrorMessage = false;  //obv
+        
+        int amountOfCredits = (int) main.getCreditsFromMain(); //for simplicity
         //TODO: (RESOLVED) Make abstract and put in methods where we need to deal with integers that they input
         //Could've given it name of points given but I need to see how this project develops
         //while(retryAgain) {
@@ -37,15 +47,15 @@ public class Reader { //decided against making this abstract because when I am e
                 //System.out.print("CONFIRM INPUT: ");
                 toReturn = Integer.parseInt(getInput());
             } 
-            catch (Exception e) {
+            catch (Exception a) {
                 System.err.print("Incorrect input format, please try again: ");
                 while(retryAgain) {
                     try {
                         retryAgain = false;
                         toReturn = Integer.parseInt(new Reader().getInput());
                     } 
-                    catch (Exception a) {
-                        System.err.println("Incorrect input format, please try again: ");
+                    catch (Exception b) {
+                        System.err.print("Incorrect input format, please try again: ");
                     }
                     finally {
                         if (toReturn == -1) {
@@ -58,7 +68,46 @@ public class Reader { //decided against making this abstract because when I am e
             }
             
         //}
+        retryAgain = true;
+        if (toReturn < 0 || toReturn > 50 || amountOfCredits - toReturn < 0) { //TODO: Update constraint
+            //TODO: fill in later with the loop for the user to reinput
+            if (toReturn < 0) {  //ran once
+                System.out.print("Value is negative, please input a valid input: ");
+            }
+            else if (toReturn > 50) { //ran once
+                System.out.print("Value is too high, please input a valid input: "); //TODO: update comment
+            }
+            else if (amountOfCredits - toReturn < 0) {
+                System.out.print("Not Enough Credits: ");
+            } 
+            while(retryAgain) {
+                try {
+                    retryAgain = false;
+                    isErrorMessage = false;
+                    toReturn = Integer.parseInt(new Reader().getInput());
+                }
+                catch (Exception c) {
+                    System.err.print("Incorrect input format, please try again: ");
+                    isErrorMessage = true;
+                }
+                finally {
+                    if (toReturn < 0 || toReturn > 50 ||  amountOfCredits - toReturn < 0) {
+                        retryAgain = true;
+                    }
+                    if (toReturn < 0 && !isErrorMessage) { 
+                        System.out.print("Value is negative, please input a valid input: ");
+                    }
+                    else if (toReturn > 50 && !isErrorMessage) {
+                        System.out.print("Value is too high, please input a valid input: "); //TODO: update comment
+                    } 
+                    else if (amountOfCredits - toReturn < 0 && !isErrorMessage) {
+                        System.out.print("Not Enough Credits: ");
+                    } 
+                }
 
+            }
+        }
+        
         return toReturn;
     }
 
