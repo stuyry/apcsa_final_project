@@ -1,13 +1,39 @@
 package Code.Points;
 
-public interface Points {
-    //private long points;
 
-    public abstract long getPoints();
-    public abstract void setPoints(long points);
-    public abstract void applyState();
-    public abstract State getState();
-    public abstract long getActualValue(); //access from state (in State.java / enum)
+public abstract class Points {
+    //private long points;
+    private long creditsApplied; //this is credits applied
+    private State state;
+    //private long actualValue;
+
+
+
+    public long getPoints() { //this will show them the credits applied
+        return creditsApplied;
+    }
+
+
+    public void setPoints(long creditsApplied) { //user will input this
+        this.creditsApplied = creditsApplied;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    // public String getStateAsString() { //not necessary when I can do "" + getState() + ""
+    //     return "" + state + "";
+    // }
+
+
+    public abstract long getActualValue();
+    public abstract void applyState(); //STAY ABSTRACT
+    public abstract void sequence(); //STAY ABSTRACT
 
 
     //public abstract long determineStrength(); //TODO: (RESOLVED) (will not be using) uncomment later

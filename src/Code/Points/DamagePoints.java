@@ -1,38 +1,27 @@
 package Code.Points;
 
-public class DamagePoints implements Points {
-    private long creditsApplied; //this is credits applied
-    private State state;
-    private long actualValue;
+import Code.Reader;
 
-
-    @Override
-    public long getPoints() { //this will show them the credits applied
-        return creditsApplied;
-    }
-
-    @Override
-    public void setPoints(long creditsApplied) { //user will input this
-        this.creditsApplied = creditsApplied;
-    }
-
+public class DamagePoints extends Points {
+    
     @Override
     public void applyState() { //really wanted to make this a constructor but I realized that when I make the object, the applied credits is null/0 and it constantly sets it to Weak/25
-        if (creditsApplied < 10) { //make limits random
-            state = State.LOW;
+        
+        if (getPoints() < 10) { //make limits random
+            setState(State.LOW);
         } 
-        else if (creditsApplied < 20) {
-            state = State.MEDIUM;
+        else if (getPoints() < 20) {
+            setState(State.MEDIUM);
         }
         else {
-            state = State.MAX;
+            setState(State.MAX);
         }
         
     }
-
     @Override
-    public State getState() {
-        return state;
+    public long getActualValue() { //accessed in state enum
+        return getState().getActualValue(); 
+        //TODO: add conversion factor and change the Points, maybe 1 2 3, might do switch??
     }
 
     // public String getStateAsString() { //not necessary when I can do "" + getState() + ""
@@ -40,9 +29,17 @@ public class DamagePoints implements Points {
     // }
 
     @Override
-    public long getActualValue() {
-        return state.getActualValue(); 
-        //TODO: add conversion factor and change the Points, maybe 1 2 3, might do switch??
+    public void sequence() {
+        System.out.print("Apply Credits towards DMG here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure
+        System.out.print("Credit input for damage: ");
+        setPoints(new Reader().getInputAsInt()); //IT WORKED!!
+        System.out.print("RECEIVED: ");
+        System.out.println("" + getPoints() + "");
+        applyState();
+        System.out.print("Damage State returned: ");
+        System.out.println ("" + getState() + ""); //EVERYTHING WORKS WONDERFUL!!!
+        System.out.print("Damage you will deal per Attack: ");
+        System.out.print("" + getActualValue() + "");
     }
 
 }
