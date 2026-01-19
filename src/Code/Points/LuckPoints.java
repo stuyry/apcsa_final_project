@@ -1,5 +1,7 @@
 package Code.Points;
 
+import Code.Reader;
+
 public class LuckPoints extends Points{
     @Override
     public void applyState() { 
@@ -23,6 +25,20 @@ public class LuckPoints extends Points{
 
     @Override
     public void sequence() {
-        
+        System.out.print("Apply Credits towards LUCK here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure
+        System.out.print("Credit input for luck: ");
+        setPoints(new Reader().getInputAsInt()); //IT WORKED!!
+        System.out.print("\n");
+        System.out.print("RECEIVED: ");
+        System.out.println("" + getPoints() + "");
+        applyState();
+        System.out.print("Luck State returned: ");
+        System.out.println ("" + getState() + ""); //EVERYTHING WORKS WONDERFUL!!!
+        System.out.print("Chance of Critical Hit: ");
+        System.out.println("" + getActualValue() + "".concat("%")); //update this to be 50 less than landing chancce
+        System.out.print("Chance of landing attack: ");
+        System.out.println("" + getActualValue() + "".concat("%"));
+
+        System.out.print("\n");
     }
 }

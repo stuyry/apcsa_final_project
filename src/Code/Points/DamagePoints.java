@@ -33,13 +33,15 @@ public class DamagePoints extends Points {
         System.out.print("Apply Credits towards DMG here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure
         System.out.print("Credit input for damage: ");
         setPoints(new Reader().getInputAsInt()); //IT WORKED!!
+        System.out.print("\n");
         System.out.print("RECEIVED: ");
         System.out.println("" + getPoints() + "");
         applyState();
         System.out.print("Damage State returned: ");
         System.out.println ("" + getState() + ""); //EVERYTHING WORKS WONDERFUL!!!
         System.out.print("Damage you will deal per Attack: ");
-        System.out.print("" + getActualValue() + "");
+        System.out.println("" + getActualValue() + "");
+        System.out.print("\n");
     }
 
 }

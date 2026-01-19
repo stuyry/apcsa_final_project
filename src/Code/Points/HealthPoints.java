@@ -1,5 +1,7 @@
 package Code.Points;
 
+import Code.Reader;
+
 public class HealthPoints extends Points {
     @Override
     public void applyState() { 
@@ -23,7 +25,18 @@ public class HealthPoints extends Points {
 
     @Override
     public void sequence() {
-        
+        System.out.print("Apply Credits towards HP here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure
+        System.out.print("Credit input for health points: ");
+        setPoints(new Reader().getInputAsInt()); //IT WORKED!!
+        System.out.print("\n");
+        System.out.print("RECEIVED: ");
+        System.out.println("" + getPoints() + "");
+        applyState();
+        System.out.print("HP State returned: ");
+        System.out.println ("" + getState() + ""); //EVERYTHING WORKS WONDERFUL!!!
+        System.out.print("Character HP: ");
+        System.out.println("" + getActualValue() + "".concat("%"));
+        System.out.print("\n");
     }
 }
 //OLD PROTOTYPE FROM MY SECOND COMMIT I THINK
