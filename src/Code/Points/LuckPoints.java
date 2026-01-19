@@ -1,6 +1,6 @@
 package Code.Points;
 
-public class LuckPoints extends Points{
+public class LuckPoints implements Points{
     private long luck;
 
     @Override

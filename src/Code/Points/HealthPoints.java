@@ -1,6 +1,6 @@
 package Code.Points;
 
-public class HealthPoints extends Points {
+public class HealthPoints implements Points {
     private long HP;
 
     @Override
@@ -11,7 +11,7 @@ public class HealthPoints extends Points {
     @Override
     public void setPoints(long HP) { //used to update HP after each attack from opponenet
         this.HP = HP;
-    }
+    } //TODO: might need to change to apply credits
 
     // @Override
     // public long determineStrength() {

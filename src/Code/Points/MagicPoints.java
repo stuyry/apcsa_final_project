@@ -1,6 +1,6 @@
 package Code.Points;
 
-public class MagicPoints extends Points {
+public class MagicPoints implements Points {
     private long MP;
 
     @Override

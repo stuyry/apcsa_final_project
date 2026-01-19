@@ -1,6 +1,6 @@
 package Code.Points;
 
-public class DefensePoints extends Points{
+public class DefensePoints implements Points{
     private long def;
 
     @Override

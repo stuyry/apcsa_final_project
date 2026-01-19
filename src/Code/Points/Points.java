@@ -1,6 +1,6 @@
 package Code.Points;
 
-public abstract class Points {
+public interface Points {
     //private long points;
 
     public abstract long getPoints();
