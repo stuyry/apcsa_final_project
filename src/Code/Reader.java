@@ -15,8 +15,8 @@ public class Reader { //decided against making this abstract because when I am e
     public Reader() { //My take on Competitive coding (USACO) Kattio class except without looking at it
         read = new BufferedReader(new InputStreamReader(System.in));
         try {
-            input = read.readLine(); //TODO: ensure that input is getting this value
-        }   //TODO: ensure that this isn't reading lines that are useless, like ensure its getting use input
+            input = read.readLine(); //TODO: RESOLVED ensure that input is getting this value
+        }   //TODO: RESOLVED ensure that this isn't reading lines that are useless, like ensure its getting use input
         catch (IOException e) {
             System.err.print("Issue in Reader!!");
         }
@@ -27,9 +27,28 @@ public class Reader { //decided against making this abstract because when I am e
         //value given automatically by constructor, so use this method then dot notation in etc
     }
     public int getInputAsInt() { 
+        int toReturn = -1;
+        boolean retryAgain = true;
         //TODO: (RESOLVED) Make abstract and put in methods where we need to deal with integers that they input
         //Could've given it name of points given but I need to see how this project develops
-        return Integer.parseInt(getInput());
+        while(retryAgain) {
+            try {
+                retryAgain = false; //theoretically this should be skipped because the error would be given from the code above
+                System.out.print("CONFIRM INPUT: ");
+                toReturn = Integer.parseInt(new Reader().getInput());
+            } 
+            catch (Exception e) {
+                System.err.println("Incorrect input format, please try again: ");
+                //retryAgain = true; //creates infinite loop
+            }
+            finally {
+                if (toReturn == -1) {
+                    retryAgain = true;
+                }
+            }
+        }
+
+        return toReturn;
     }
 
     public String getInputAsString() {
