@@ -22,15 +22,22 @@ public class Battle {
     static int firstPick = -1;
     static int secondPick = -1;
 
-    static int lowerDefense = 0;
-    static int lowerAtk = 0;
-    static int lowerLuck = 0;
+    // static int lowerDefense = 0;
+    // static int lowerAtk = 0;
+    // static int lowerLuck = 0;
 
     static long luckyLoopValue = 0;
     static long randomHolder = 0;
     static int readerHolder = 0;
 
-    static double damageMultiplier = 1; //FOR TESTING PURPOSES
+    static int magicTurnHolder = 0;
+    static boolean applyTurnHolder = true; //other part of fix 
+
+    static boolean isNormalAttack = false;
+
+    //static int magicApplier = 0;
+
+    static double damageMultiplier = 0; //FOR TESTING PURPOSES
 
     public void applyBasedOnLuck() {
         
@@ -45,12 +52,15 @@ public class Battle {
                 readerHolder = new Reader().getInputAsInt(10);
 
                 if (readerHolder == randomHolder) {
+                    System.out.print("\n");
                     System.out.println("LUCKY, move applied.");
                     break;
                 }
                 if (luckyLoopValue == 1 && readerHolder != randomHolder) {
+                    System.out.print("\n");
                     System.out.println("UNLUCKY, move was not applied");
                     damageMultiplier = 0;
+
                 }
                     luckyLoopValue -= 1;
             }
@@ -61,42 +71,62 @@ public class Battle {
         }
 
         else {
+            System.out.print("\n");
             System.out.println ("Luck is maxed out! Move is automatically applied");
         }
     }
 
+    public double getDefenseMultiplier() { //used to multiply against the attack/damage multiplier
+        //ALL GOOD HERE!!
+        //TODO: make specifically for Poison
+        //TODO: remove test case
+        System.out.println("TESTING: get Defense Multiplier value (IF NEGATIVE): " + (double)(1 + (Math.abs((double)opp.getDEF() - ((double)new Magic().getPoisonDefenseNegator() * (double)magicTurnHolder)) / 100.0))); //THIS WOULD NOT PRINT CORRECTLY, BUT TESTED AND THIS METHOD WORKS FINE
+        return ((double) opp.getDEF() - ((double) new Magic().getPoisonDefenseNegator() * (double) magicTurnHolder) < 0 ? 1 + (Math.abs((double) opp.getDEF() - ((double) new Magic().getPoisonDefenseNegator() * (double) magicTurnHolder)) / 100.0) : 1 + ((double) opp.getDEF() - ((double) new Magic().getPoisonDefenseNegator() * (double) magicTurnHolder)) / 100.0); 
+    }
+
     public void battle() {
         while(!(protagonistHP.get() <= 0 || antagonistHP.get() <= 0)) {
+            // if (magicTurnHolder == 1) {
+            //     applyTurnHolder = true;
+            // }
             turnNumber += 1;
+            System.out.print("\n");
             System.out.println("Turn # : " + turnNumber);
+            System.out.print("\n");
 
             System.out.println("Current HP: " + protagonistHP.get() + "");
             System.out.println("Opponent's HP: " + antagonistHP.get() + "\n");
+            System.out.println("TESTING: Opponenet's Defense: " + opp.getDEF() + "\n");
 
             if (userTurn && !opponentTurn) {
                 System.out.println("Pick Move: (1: Attack, 2: Magic, 3: Skip Turn)");
                 firstPick = new Reader().getInputAsInt(3);
 
                 System.out.println("RECEIVED: " + firstPick);
+                System.out.print("\n");
                 
                 switch(firstPick) {
                     case 1: 
                     System.out.println("Pick Move: (1: Scratch, 2: Jab, 3: HayMaker)");
                     secondPick = new Reader().getInputAsInt(3);
 
+                    System.out.print("\n");
                     System.out.println("RECEIVED: " + secondPick);
 
                     switch(secondPick) {
                         case 1:
                             damageMultiplier = new Attack().getScratchMultiplier();
+                            isNormalAttack = true;
                         break;
 
                         case 2:
                             damageMultiplier = new Attack().getJabMultiplier();
+                            isNormalAttack = true;
                         break;
                             
                         case 3:
                             damageMultiplier = new Attack().getHayMakerMultiplier();
+                            isNormalAttack = true;
                         break;
                     }
                     applyBasedOnLuck();
@@ -106,15 +136,27 @@ public class Battle {
                     System.out.println("Pick Move: (1: Poison, 2: StickArms, 3: MagicSpellOfNausea)");
                     secondPick = new Reader().getInputAsInt(3);
 
+                    System.out.print("\n");
                     System.out.println("RECEIVED: " + secondPick);
 
                     switch(secondPick) {
                         case 1:
-                            lowerDefense = new Magic().getPoisonDefenseNegator(); 
+                            //lowerDefense = new Magic().getPoisonDefenseNegator(); 
+                            magicTurnHolder += 1;
+                            applyTurnHolder = false;
+                            System.out.print("\n");
+                            System.out.println("TESTING: Magic Turn Holder Value: " + magicTurnHolder);
+                        break;//I FORGOT ALL 3 BREAKS, THANK GOD I DEBUGGED THIS :/
                         case 2: 
-                            lowerAtk = new Magic().getStickArmLowerAtk();
+                            //lowerAtk = new Magic().getStickArmLowerAtk();
+                            magicTurnHolder += 1;
+                            applyTurnHolder = false;
+                        break;
                         case 3:
-                            lowerLuck = new Magic().getMagicSpellOfNauseaLowerLuck();
+                            //lowerLuck = new Magic().getMagicSpellOfNauseaLowerLuck();
+                            magicTurnHolder += 1;
+                            applyTurnHolder = false; // used so that if you play magic twice I can account for that by not applying right away (compound effect)
+                        break;
                     }
                     break;
 
@@ -122,13 +164,24 @@ public class Battle {
                         opponentTurn = true;
                     break;
                 }
+
+                if (isNormalAttack && applyTurnHolder && magicTurnHolder < 1) {//WHY I GET ERROR: applyTurnHolder becomes true at end all of the time, fixed??
                 //* new Attack().exampleAttack.getMultiplier()
+                System.out.println("TESTING: NO APPLICATION");
                 opp.setHP(antagonistHP.get() - (int)(character.getDMG() * damageMultiplier)); //* ((opp.getDEF() - lowerDefense) / 100)));//character.getDMG());
-                lowerDefense = 0;
-                lowerAtk = 0;
-                lowerLuck = 0;
-                damageMultiplier = 1; 
-                
+                }
+                else if (isNormalAttack && applyTurnHolder && magicTurnHolder >= 1) {
+                    System.out.println("TESTING: APPLICATION !!");
+                    opp.setHP(antagonistHP.get() - (int)(character.getDMG() * damageMultiplier * getDefenseMultiplier()));
+                    magicTurnHolder = 0;
+                    applyTurnHolder = false;
+                }
+                // lowerDefense = 0;
+                // lowerAtk = 0;
+                // lowerLuck = 0;
+                damageMultiplier = 0; 
+                isNormalAttack = false;
+                applyTurnHolder = true;
             }
 
         }
