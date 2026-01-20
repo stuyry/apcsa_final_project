@@ -52,7 +52,7 @@ public class HealthPoints extends Points {
         System.out.print("HP State returned: ");
         System.out.println ("" + getState() + ""); //EVERYTHING WORKS WONDERFUL!!!
         System.out.print("Character HP: ");
-        System.out.println("" + getActualValue() + "".concat("%"));
+        System.out.println("" + getActualValue() + "");
         System.out.print("\n");
 
         //System.out.println(new Main().getCreditsFromMain()); //TODO: RESOLVED temp

@@ -39,6 +39,7 @@ public class Main {
      // TODO: fill in with all the values inputted, then loop through it to show user everything they put in
     //TODO: make it so that if a String is inputted where a string is, then they must reinput.
     public static void main(String[] args) { //TODO: IMPORTANT WITH LOTS TO DO: MAKE TRY CATCH FOR NAME AND REMOVE THE RANDOM VALUES FROM PRINTING IN SEQUENCES.
+       //TEST System.out.print(new RandomNumber(3).getRandomNumber());
         System.out.println("Name your character!");
         name = new Name();
         System.out.println("Name entered: " + name.getName() + "");

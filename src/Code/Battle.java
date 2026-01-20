@@ -19,8 +19,11 @@ public class Battle {
     static boolean userTurn = true;
     static boolean opponentTurn = false;
 
-    static int firstPick = -1;
-    static int secondPick = -1;
+    static boolean wasUserTurn = false;
+    static boolean wasOpponentTurn = false;
+
+    static int characterFirstPick = -1;
+    static int characterSecondPick = -1;
 
     // static int lowerDefense = 0;
     // static int lowerAtk = 0;
@@ -47,7 +50,7 @@ public class Battle {
             while (luckyLoopValue > 0) {
                 readerHolder = -1;
                 if (luckyLoopValue == (character.getLuck() / 10)) {
-                    randomHolder = new RandomNumber(10).getRandomNumber();
+                    randomHolder = (long) new RandomNumber(10).getRandomNumber();
                 }
                 readerHolder = new Reader().getInputAsInt(10);
 
@@ -100,20 +103,20 @@ public class Battle {
 
             if (userTurn && !opponentTurn) {
                 System.out.println("Pick Move: (1: Attack, 2: Magic, 3: Skip Turn)");
-                firstPick = new Reader().getInputAsInt(3);
+                characterFirstPick = new Reader().getInputAsInt(3);
 
-                System.out.println("RECEIVED: " + firstPick);
+                System.out.println("RECEIVED: " + characterFirstPick);
                 System.out.print("\n");
                 
-                switch(firstPick) {
+                switch(characterFirstPick) {
                     case 1: 
                     System.out.println("Pick Move: (1: Scratch, 2: Jab, 3: HayMaker)");
-                    secondPick = new Reader().getInputAsInt(3);
+                    characterSecondPick = new Reader().getInputAsInt(3);
 
                     System.out.print("\n");
-                    System.out.println("RECEIVED: " + secondPick);
+                    System.out.println("RECEIVED: " + characterSecondPick);
 
-                    switch(secondPick) {
+                    switch(characterSecondPick) {
                         case 1:
                             damageMultiplier = new Attack().getScratchMultiplier();
                             isNormalAttack = true;
@@ -134,12 +137,12 @@ public class Battle {
                     break; //i got scared but I realized I was missing a break for the first case
                     case 2:
                     System.out.println("Pick Move: (1: Poison, 2: StickArms, 3: MagicSpellOfNausea)");
-                    secondPick = new Reader().getInputAsInt(3);
+                    characterSecondPick = new Reader().getInputAsInt(3);
 
                     System.out.print("\n");
-                    System.out.println("RECEIVED: " + secondPick);
+                    System.out.println("RECEIVED: " + characterSecondPick);
 
-                    switch(secondPick) {
+                    switch(characterSecondPick) {
                         case 1:
                             //lowerDefense = new Magic().getPoisonDefenseNegator(); 
                             magicTurnHolder += 1;
@@ -162,6 +165,7 @@ public class Battle {
 
                     case 3:
                         opponentTurn = true;
+                        userTurn = false;
                     break;
                 }
 
@@ -182,12 +186,53 @@ public class Battle {
                 damageMultiplier = 0; 
                 isNormalAttack = false;
                 applyTurnHolder = true;
+
+                wasUserTurn = true;
+                wasOpponentTurn = false;
             }
 
+            if (opponentTurn && !userTurn) { //TODO add while loop in random number to prevent 0
+                System.out.println("Opponent's Turn");
+                switch ((int) new RandomNumber(3).getRandomNumber()) { //random number being 0 caused issues
+                    case 1:
+                        System.out.println("Opponent used Scratch");
+                        System.out.print("\n");
+                        character.setHP(protagonistHP.get() - 50);//(protagonistHP.get() - (int)(character.getDMG() * damageMultiplier));
+                    break;
+
+                    case 2:
+                        System.out.println("Opponent used Jab");
+                        System.out.print("\n");
+                        character.setHP(protagonistHP.get() - 20);
+                    break;
+
+                    case 3:
+                        System.out.println("Opponent used Haymaker");
+                        System.out.print("\n");
+                        character.setHP(protagonistHP.get() - 100);
+                    break;
+                }
+                wasUserTurn = false;
+                wasOpponentTurn = true;
+            }
+            
+            if (wasUserTurn) {
+                userTurn = false;
+                opponentTurn = true;
+                wasUserTurn = false;
+            }
+            else if (wasOpponentTurn) {
+                userTurn = true;
+                opponentTurn = false;
+                wasOpponentTurn = false;
+            }
         }
 
         if (antagonistHP.get() <= 0) {
             System.out.print("YOU WIN");
+        }
+        else {
+            System.out.print("YOU LOSE");
         }
 
 
