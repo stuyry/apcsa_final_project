@@ -24,8 +24,6 @@ public class Name {
                 toRetry = true;
                 System.out.print("Incorrect input format, please try again: ");
             }
-            
-
         }
     }
 

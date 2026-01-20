@@ -7,7 +7,7 @@ public class Attack {
 
     public interface Jab {
         double jabMultiplier = 0.4;
-        int MagicGain = 1;
+        int MagicGain = 3;
     }
 
     public interface HayMaker {

@@ -150,7 +150,7 @@ public class Reader { //decided against making this abstract because when I am e
         if (toReturn <= 0 || toReturn > max) { //TODO: Update constraint
             //TODO: fill in later with the loop for the user to reinput
             if (toReturn <= 0) {  //ran once
-                System.out.print("Value is negative, please input a valid input: ");
+                System.out.print("Value is too low, please input a valid input: ");
             }
             else if (toReturn > max) { //ran once
                 System.out.print("Value is too high, please input a valid input: "); //TODO: update comment
@@ -170,7 +170,7 @@ public class Reader { //decided against making this abstract because when I am e
                         retryAgain = true;
                     }
                     if (toReturn <= 0 && !isErrorMessage) { 
-                        System.out.print("Value is negative, please input a valid input: ");
+                        System.out.print("Value is too low, please input a valid input: ");
                     }
                     else if (toReturn > max && !isErrorMessage) {
                         System.out.print("Value is too high, please input a valid input: "); //TODO: update comment

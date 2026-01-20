@@ -1,6 +1,7 @@
 package Code;
 
 import Code.Abilities.Attack;
+import Code.Abilities.Magic;
 import java.util.function.Supplier;
 
 //Class made for ease of implementation
@@ -21,8 +22,48 @@ public class Battle {
     static int firstPick = -1;
     static int secondPick = -1;
 
-    static double damageMultiplier = 0; //FOR TESTING PURPOSES
+    static int lowerDefense = 0;
+    static int lowerAtk = 0;
+    static int lowerLuck = 0;
 
+    static long luckyLoopValue = 0;
+    static long randomHolder = 0;
+    static int readerHolder = 0;
+
+    static double damageMultiplier = 1; //FOR TESTING PURPOSES
+
+    public void applyBasedOnLuck() {
+        
+        System.out.println("Enter lucky numbers (1 - 10)"); 
+        luckyLoopValue = (character.getLuck() / 10); //TODO: add magic values which will either be lost or applied
+        if (luckyLoopValue < 10) { 
+            while (luckyLoopValue > 0) {
+                readerHolder = -1;
+                if (luckyLoopValue == (character.getLuck() / 10)) {
+                    randomHolder = new RandomNumber(10).getRandomNumber();
+                }
+                readerHolder = new Reader().getInputAsInt(10);
+
+                if (readerHolder == randomHolder) {
+                    System.out.println("LUCKY, move applied.");
+                    break;
+                }
+                if (luckyLoopValue == 1 && readerHolder != randomHolder) {
+                    System.out.println("UNLUCKY, move was not applied");
+                    damageMultiplier = 0;
+                }
+                    luckyLoopValue -= 1;
+            }
+
+                luckyLoopValue = 0;
+                readerHolder = -1;
+                randomHolder = -1;
+        }
+
+        else {
+            System.out.println ("Luck is maxed out! Move is automatically applied");
+        }
+    }
 
     public void battle() {
         while(!(protagonistHP.get() <= 0 || antagonistHP.get() <= 0)) {
@@ -58,8 +99,9 @@ public class Battle {
                             damageMultiplier = new Attack().getHayMakerMultiplier();
                         break;
                     }
-                    break;
+                    applyBasedOnLuck();
 
+                    break; //i got scared but I realized I was missing a break for the first case
                     case 2:
                     System.out.println("Pick Move: (1: Poison, 2: StickArms, 3: MagicSpellOfNausea)");
                     secondPick = new Reader().getInputAsInt(3);
@@ -67,9 +109,12 @@ public class Battle {
                     System.out.println("RECEIVED: " + secondPick);
 
                     switch(secondPick) {
-                        case 1: 
+                        case 1:
+                            lowerDefense = new Magic().getPoisonDefenseNegator(); 
                         case 2: 
+                            lowerAtk = new Magic().getStickArmLowerAtk();
                         case 3:
+                            lowerLuck = new Magic().getMagicSpellOfNauseaLowerLuck();
                     }
                     break;
 
@@ -78,7 +123,12 @@ public class Battle {
                     break;
                 }
                 //* new Attack().exampleAttack.getMultiplier()
-                opp.setHP(antagonistHP.get() - (int)(character.getDMG() * damageMultiplier/* * lowerDefense / 10 */));//character.getDMG());
+                opp.setHP(antagonistHP.get() - (int)(character.getDMG() * damageMultiplier)); //* ((opp.getDEF() - lowerDefense) / 100)));//character.getDMG());
+                lowerDefense = 0;
+                lowerAtk = 0;
+                lowerLuck = 0;
+                damageMultiplier = 1; 
+                
             }
 
         }

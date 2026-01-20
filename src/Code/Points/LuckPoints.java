@@ -49,7 +49,7 @@ public class LuckPoints extends Points{
         System.out.print("Luck State returned: ");
         System.out.println ("" + getState() + ""); //EVERYTHING WORKS WONDERFUL!!!
         System.out.print("Chance of Critical Hit: ");
-        System.out.println("" + getActualValue() + "".concat("%")); //update this to be 50 less than landing chancce
+        System.out.println("" + (getActualValue() - 50) + "".concat("%")); //update this to be 50 less than landing chancce
         System.out.print("Chance of landing attack: ");
         System.out.println("" + getActualValue() + "".concat("%"));
 
