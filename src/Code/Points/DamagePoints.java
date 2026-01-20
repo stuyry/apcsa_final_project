@@ -34,7 +34,7 @@ public class DamagePoints extends Points {
 
     @Override
     public void sequence() {
-        System.out.println(randomValue);
+        //System.out.println(randomValue);
 
         int points = 0;
         System.out.print("Apply Credits towards DMG here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure

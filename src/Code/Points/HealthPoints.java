@@ -32,7 +32,7 @@ public class HealthPoints extends Points {
 
     @Override
     public void sequence() {
-        System.out.println(randomValue);
+        //System.out.println(randomValue);
 
         int points = 0;
 

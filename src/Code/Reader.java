@@ -29,7 +29,7 @@ public class Reader { //decided against making this abstract because when I am e
         }
     }
 
-    private String getInput() { 
+    public String getInput() { 
         return this.input; 
         //value given automatically by constructor, so use this method then dot notation in etc
     }
