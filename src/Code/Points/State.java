@@ -14,5 +14,6 @@ package Code.Points;
         public long getActualValue() {
             return actualValue;
         }
+         
     }
 
