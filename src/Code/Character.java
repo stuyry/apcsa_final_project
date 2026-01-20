@@ -1,10 +1,9 @@
 package Code;
 
-import Code.Points.Name;
 import Code.Points.State;
 
 public class Character {
-    private final Name name;
+    private final String name;
     private long dmg;
     private long def;
     private long HP;
@@ -17,7 +16,7 @@ public class Character {
     private final State luckState;
     private final State magicState;
 
-    public Character(Name name, long dmg, State dmgState, long def, State defState, long HP, State HPState, long luck, State luckState, long magic, State magicState) {
+    public Character(String name, long dmg, State dmgState, long def, State defState, long HP, State HPState, long luck, State luckState, long magic, State magicState) {
         this.name = name;
         this.dmg = dmg;
         this.def = def;
@@ -41,7 +40,7 @@ public class Character {
         System.out.println("Attack Stats (damage/State): " + dmg + " / " + dmgState);
         System.out.println("Defense Stats (defense/State): " + def + " / " + defState);
         System.out.println("Luck Stats (luck/State): " + luck + " / " + luckState);
-        System.out.print("Magic Stats (magic/State): " + magic + " / " + magicState);
+        System.out.println("Magic Stats (magic/State): " + magic + " / " + magicState + "\n");
     }
 
     public long getHP() {

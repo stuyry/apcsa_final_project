@@ -32,6 +32,10 @@ public class Main {
         return credit.getCredits(); //used to be credits.get() (supplier) 
     } //works properly
 
+    static Character getCharacterFromMain() {
+        return character;
+    }
+
      // TODO: fill in with all the values inputted, then loop through it to show user everything they put in
     //TODO: make it so that if a String is inputted where a string is, then they must reinput.
     public static void main(String[] args) { //TODO: IMPORTANT WITH LOTS TO DO: MAKE TRY CATCH FOR NAME AND REMOVE THE RANDOM VALUES FROM PRINTING IN SEQUENCES.
@@ -51,9 +55,11 @@ public class Main {
         magicPoints.sequence();
         System.out.println("Credits unused (applied as negation to Opponent HP): " + credits.get() + "");
         System.out.print("\n");
-        character = new Character(name, damagePoints.getActualValue(), damagePoints.getState(), defensePoints.getActualValue(), defensePoints.getState(), healthPoints.getActualValue(), healthPoints.getState(), luckPoints.getActualValue(), luckPoints.getState(), magicPoints.getActualValue(), magicPoints.getState());
+        character = new Character(name.getName(), damagePoints.getActualValue(), damagePoints.getState(), defensePoints.getActualValue(), defensePoints.getState(), healthPoints.getActualValue(), healthPoints.getState(), luckPoints.getActualValue(), luckPoints.getState(), magicPoints.getActualValue(), magicPoints.getState());
         
         character.printCharacterSummary();
+
+        new Battle().battle();
         // System.out.print("" + credits.get() + ""); //CLEARLY SUPPLIER WORKS, WHY AM I GETTING SO MANY ISSUES THEN :(
         // credit.setCredits(40);
         // System.out.print("" + credits.get() + "");
