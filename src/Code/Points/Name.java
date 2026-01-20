@@ -6,7 +6,7 @@ public class Name {
     private String name;
     private boolean toRetry = true;
     public Name() { //DEFINITELY a better way to do this, but I am NOT writing out all special characters :/
-        while (toRetry) { //TODO: Went to the Java API maybe I should use StringBuffer or StringBuilder, because I doubt the getInput can support that, creating an error. But I don't really know where to go from this -> ima go eat dinner now.
+        while (toRetry) { //TODO: IMPORTANT? Went to the Java API maybe I should use StringBuffer or StringBuilder, because I doubt the getInput can support that, creating an error. But I don't really know where to go from this -> ima go eat dinner now.
 
             name = new Reader().getInput();
             toRetry = false;

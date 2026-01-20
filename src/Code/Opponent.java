@@ -19,7 +19,7 @@ public class Opponent {
     private long luck;
     private long magic;
 
-    public void applyCreditsTowardsAttributes() { //TODO: Will add logic later, just want to get a rough draft of battle actual working
+    public void applyCreditsTowardsAttributes() { //TODO: THIS IS OKAY.. -> Will add logic later, just want to get a rough draft of battle actual working
         healthPoints.setPoints(new RandomNumber(50).getRandomNumber()); 
         damagePoints.setPoints(new RandomNumber(50).getRandomNumber());
         defensePoints.setPoints(new RandomNumber(50).getRandomNumber());
@@ -73,5 +73,5 @@ public class Opponent {
         //for magic, (disable all magic)
         this.magic = magic;
     }
-    //TODO: add a method for choosing attack
+    //TODO: RESOLVED (via switch) add a method for choosing attack
 }

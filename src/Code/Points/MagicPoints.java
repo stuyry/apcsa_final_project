@@ -26,7 +26,7 @@ public class MagicPoints extends Points {
     @Override
     public long getActualValue() { 
         return getState().getActualValue() * 20; 
-        //TODO: add conversion factor and change the Points, maybe 1 2 3, might do switch??
+        //TODO: RESOLVED add conversion factor and change the Points, maybe 1 2 3, might do switch??
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MagicPoints extends Points {
         System.out.print("Magic State returned: ");
         System.out.println ("" + getState() + ""); //EVERYTHING WORKS WONDERFUL!!!
         System.out.print("Infliction of Magic: "); //TODO: fill in with something better once I have a better idea
-        System.out.println("" + getActualValue() + "".concat("%"));
+        System.out.println("" + getActualValue() + "".concat("%")); //TODO: IMPORTANT ADD PERCENTS/FACTORS TO THE ATTRIBUTES OF THE MAGIC
         System.out.print("\n");
     }
 }

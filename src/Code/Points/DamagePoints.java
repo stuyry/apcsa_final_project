@@ -26,7 +26,7 @@ public class DamagePoints extends Points {
     public long getActualValue() { //accessed in state enum
         return getState().getActualValue() * 5;
 
-        //TODO: add conversion factor and change the Points, maybe 1 2 3, might do switch??
+        //TODO: RESOLVED add conversion factor and change the Points, maybe 1 2 3, might do switch??
     }
 
     // public String getStateAsString() { //not necessary when I can do "" + getState() + ""

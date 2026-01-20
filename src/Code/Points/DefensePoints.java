@@ -26,7 +26,7 @@ public class DefensePoints extends Points{
     @Override
     public long getActualValue() { 
         return (getState().getActualValue() * 10) - 50; 
-        //TODO: add conversion factor and change the Points, maybe 1 2 3, might do switch??
+        //TODO: RESOLVED add conversion factor and change the Points, maybe 1 2 3, might do switch??
     }
 
     @Override

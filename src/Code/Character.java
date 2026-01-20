@@ -2,7 +2,7 @@ package Code;
 
 import Code.Points.State;
 
-public class Character {
+public class Character { //TODO: make this a interface
     private final String name;
     private long dmg;
     private long def;

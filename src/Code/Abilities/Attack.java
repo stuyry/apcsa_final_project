@@ -1,6 +1,6 @@
 package Code.Abilities;
 
-public class Attack {
+public interface Attack {
     public interface Scratch {
         double scratchMultipler = 1;
     }
@@ -14,23 +14,23 @@ public class Attack {
         double HayMakerMultiplier = 2.0;
         int MagicDrain = 2;
     }
-
-    public double getScratchMultiplier() {
-        return Scratch.scratchMultipler;
-    }
-
-    public double getJabMultiplier() {
-        return Jab.jabMultiplier;
-    }
-
-    public int getJabMagicGain() {
-        return Jab.MagicGain;
-    }
-
-    public double getHayMakerMultiplier() {
-        return HayMaker.HayMakerMultiplier;
-    }
-    public int getHayMakerMagicDrain() {
-        return HayMaker.MagicDrain;
-    }
 }
+//     public double getScratchMultiplier() {
+//         return Scratch.scratchMultipler;
+//     }
+
+//     public double getJabMultiplier() {
+//         return Jab.jabMultiplier;
+//     }
+
+//     public int getJabMagicGain() {
+//         return Jab.MagicGain;
+//     }
+
+//     public double getHayMakerMultiplier() {
+//         return HayMaker.HayMakerMultiplier;
+//     }
+//     public int getHayMakerMagicDrain() {
+//         return HayMaker.MagicDrain;
+//     }
+// }

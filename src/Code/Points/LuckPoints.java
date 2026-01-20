@@ -17,7 +17,7 @@ public class LuckPoints extends Points{
         else if (getPoints() <= getRandomValue() + 15) {
             setState(State.MEDIUM);
         }
-        else { //TODO: VERY IMPORTANT MAKE THIS ELSE IN EVERYTHING
+        else { //TODO: RESOLVED VERY IMPORTANT MAKE THIS ELSE IN EVERYTHING
             setState(State.MAX); //NULL error occurs because of the logic lol
         }
         
@@ -26,7 +26,7 @@ public class LuckPoints extends Points{
     @Override
     public long getActualValue() { 
         return getState().getActualValue() * 10; 
-        //TODO: add conversion factor and change the Points, maybe 1 2 3, might do switch??
+        //TODO: RESOLVED add conversion factor and change the Points, maybe 1 2 3, might do switch??
     }
 
     @Override

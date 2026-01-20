@@ -29,18 +29,18 @@ public class Battle {
     // static int lowerAtk = 0;
     // static int lowerLuck = 0;
 
-    static long luckyLoopValue = 0;
-    static long randomHolder = 0;
-    static int readerHolder = 0;
+    static long luckyLoopValue = 0; //used for lucky
+    static long randomHolder = 0; //used for lucky
+    static int readerHolder = 0; //used for lucky
 
-    static int magicTurnHolder = 0;
-    static boolean applyTurnHolder = true; //other part of fix 
+    static int magicTurnHolder = 0; //used for applying magic turn after and compounding
+    static boolean applyTurnHolder = true; //other part of fix  //used for applying magic
 
-    static boolean isNormalAttack = false;
+    static boolean isNormalAttack = false; //used for logic on when to apply magic
 
     //static int magicApplier = 0;
 
-    static double damageMultiplier = 0; //FOR TESTING PURPOSES
+    static double damageMultiplier = 0; //used as a variable to pass down from Attack interface
 
     public void applyBasedOnLuck() {
         
@@ -83,8 +83,8 @@ public class Battle {
         //ALL GOOD HERE!!
         //TODO: make specifically for Poison
         //TODO: remove test case
-        System.out.println("TESTING: get Defense Multiplier value (IF NEGATIVE): " + (double)(1 + (Math.abs((double)opp.getDEF() - ((double)new Magic().getPoisonDefenseNegator() * (double)magicTurnHolder)) / 100.0))); //THIS WOULD NOT PRINT CORRECTLY, BUT TESTED AND THIS METHOD WORKS FINE
-        return ((double) opp.getDEF() - ((double) new Magic().getPoisonDefenseNegator() * (double) magicTurnHolder) < 0 ? 1 + (Math.abs((double) opp.getDEF() - ((double) new Magic().getPoisonDefenseNegator() * (double) magicTurnHolder)) / 100.0) : 1 + ((double) opp.getDEF() - ((double) new Magic().getPoisonDefenseNegator() * (double) magicTurnHolder)) / 100.0); 
+        System.out.println("TESTING: get Defense Multiplier value (IF NEGATIVE): " + (double)(1 + (Math.abs((double)opp.getDEF() - ((double)Magic.Poison.lowerDefense * (double)magicTurnHolder)) / 100.0))); //THIS WOULD NOT PRINT CORRECTLY, BUT TESTED AND THIS METHOD WORKS FINE
+        return ((double) opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) magicTurnHolder) < 0 ? 1 + (Math.abs((double) opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) magicTurnHolder)) / 100.0) : 1 + ((double) opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) magicTurnHolder)) / 100.0); 
     }
 
     public void battle() {
@@ -118,17 +118,17 @@ public class Battle {
 
                     switch(characterSecondPick) {
                         case 1:
-                            damageMultiplier = new Attack().getScratchMultiplier();
+                            damageMultiplier = Attack.Scratch.scratchMultipler;
                             isNormalAttack = true;
                         break;
 
                         case 2:
-                            damageMultiplier = new Attack().getJabMultiplier();
+                            damageMultiplier = Attack.Jab.jabMultiplier;
                             isNormalAttack = true;
                         break;
                             
                         case 3:
-                            damageMultiplier = new Attack().getHayMakerMultiplier();
+                            damageMultiplier = Attack.HayMaker.HayMakerMultiplier;
                             isNormalAttack = true;
                         break;
                     }
