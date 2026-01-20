@@ -69,13 +69,13 @@ public class Reader { //decided against making this abstract because when I am e
             
         //}
         retryAgain = true;
-        if (toReturn < 0 || toReturn > 50 || amountOfCredits - toReturn < 0) { //TODO: Update constraint
-            //TODO: fill in later with the loop for the user to reinput
+        if (toReturn < 0 || toReturn > 50 || amountOfCredits - toReturn < 0) { //TODO: RESOLVED Update constraint
+            //TODO: RESOLVED fill in later with the loop for the user to reinput
             if (toReturn < 0) {  //ran once
                 System.out.print("Value is negative, please input a valid input: ");
             }
             else if (toReturn > 50) { //ran once
-                System.out.print("Value is too high, please input a valid input: "); //TODO: update comment
+                System.out.print("Value is too high, please input a valid input: "); //TODO: RESOLVED update comment
             }
             else if (amountOfCredits - toReturn < 0) {
                 System.out.print("Not Enough Credits: ");
@@ -98,7 +98,7 @@ public class Reader { //decided against making this abstract because when I am e
                         System.out.print("Value is negative, please input a valid input: ");
                     }
                     else if (toReturn > 50 && !isErrorMessage) {
-                        System.out.print("Value is too high, please input a valid input: "); //TODO: update comment
+                        System.out.print("Value is too high, please input a valid input: "); //TODO: RESOLVED update comment
                     } 
                     else if (amountOfCredits - toReturn < 0 && !isErrorMessage) {
                         System.out.print("Not Enough Credits: ");
@@ -147,13 +147,13 @@ public class Reader { //decided against making this abstract because when I am e
             
         //}
         retryAgain = true;
-        if (toReturn <= 0 || toReturn > max) { //TODO: Update constraint
-            //TODO: fill in later with the loop for the user to reinput
+        if (toReturn <= 0 || toReturn > max) { //TODO: RESOLVED Update constraint
+            //TODO: RESOLVED fill in later with the loop for the user to reinput
             if (toReturn <= 0) {  //ran once
                 System.out.print("Value is too low, please input a valid input: ");
             }
             else if (toReturn > max) { //ran once
-                System.out.print("Value is too high, please input a valid input: "); //TODO: update comment
+                System.out.print("Value is too high, please input a valid input: "); //TODO: RESOLVED update comment
             }
             while(retryAgain) {
                 try {
@@ -173,7 +173,7 @@ public class Reader { //decided against making this abstract because when I am e
                         System.out.print("Value is too low, please input a valid input: ");
                     }
                     else if (toReturn > max && !isErrorMessage) {
-                        System.out.print("Value is too high, please input a valid input: "); //TODO: update comment
+                        System.out.print("Value is too high, please input a valid input: "); //TODO: RESOLVED update comment
                     } 
                 }
 
