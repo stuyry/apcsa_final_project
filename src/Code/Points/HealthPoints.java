@@ -26,7 +26,7 @@ public class HealthPoints extends Points {
 
     @Override
     public long getActualValue() { 
-        return getState().getActualValue(); 
+        return getState().getActualValue() * 60; 
         //TODO: add conversion factor and change the Points, maybe 1 2 3, might do switch??
     }
 
@@ -38,7 +38,7 @@ public class HealthPoints extends Points {
 
         System.out.print("Apply Credits towards HP here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure
         System.out.print("Credit input for health points: ");
-        points = new Reader().getInputAsInt();
+        points = new Reader().getInputAsIntCredits();
 
         Integer points2 = points;
 

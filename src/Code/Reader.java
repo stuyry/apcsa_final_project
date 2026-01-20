@@ -33,7 +33,7 @@ public class Reader { //decided against making this abstract because when I am e
         return this.input; 
         //value given automatically by constructor, so use this method then dot notation in etc
     }
-    public int getInputAsInt() { 
+    public int getInputAsIntCredits() { 
         int toReturn = -1; //initialized
         boolean retryAgain = true; //obv
         boolean isErrorMessage = false;  //obv
@@ -102,6 +102,78 @@ public class Reader { //decided against making this abstract because when I am e
                     } 
                     else if (amountOfCredits - toReturn < 0 && !isErrorMessage) {
                         System.out.print("Not Enough Credits: ");
+                    } 
+                }
+
+            }
+        }
+        
+        return toReturn;
+    }
+
+    public int getInputAsInt(int max) {  //copy of old getInput as int
+        int toReturn = -1; //initialized
+        boolean retryAgain = true; //obv
+        boolean isErrorMessage = false;  //obv
+        
+        //int amountOfCredits = (int) main.getCreditsFromMain(); //for simplicity
+        //TODO: (RESOLVED) Make abstract and put in methods where we need to deal with integers that they input
+        //Could've given it name of points given but I need to see how this project develops
+        //while(retryAgain) {
+            try {
+              //  retryAgain = false; //theoretically this should be skipped because the error would be given from the code above
+                //System.out.print("CONFIRM INPUT: ");
+                toReturn = Integer.parseInt(getInput());
+            } 
+            catch (Exception a) {
+                System.err.print("Incorrect input format, please try again: ");
+                while(retryAgain) {
+                    try {
+                        retryAgain = false;
+                        toReturn = Integer.parseInt(new Reader().getInput());
+                    } 
+                    catch (Exception b) {
+                        System.err.print("Incorrect input format, please try again: ");
+                    }
+                    finally {
+                        if (toReturn == -1) {
+                            retryAgain = true;
+                        }
+                     }
+                    
+                }
+                //retryAgain = true; //creates infinite loop
+            }
+            
+        //}
+        retryAgain = true;
+        if (toReturn <= 0 || toReturn > max) { //TODO: Update constraint
+            //TODO: fill in later with the loop for the user to reinput
+            if (toReturn <= 0) {  //ran once
+                System.out.print("Value is negative, please input a valid input: ");
+            }
+            else if (toReturn > max) { //ran once
+                System.out.print("Value is too high, please input a valid input: "); //TODO: update comment
+            }
+            while(retryAgain) {
+                try {
+                    retryAgain = false;
+                    isErrorMessage = false;
+                    toReturn = Integer.parseInt(new Reader().getInput());
+                }
+                catch (Exception c) {
+                    System.err.print("Incorrect input format, please try again: ");
+                    isErrorMessage = true;
+                }
+                finally {
+                    if (toReturn <= 0 || toReturn > max) {
+                        retryAgain = true;
+                    }
+                    if (toReturn <= 0 && !isErrorMessage) { 
+                        System.out.print("Value is negative, please input a valid input: ");
+                    }
+                    else if (toReturn > max && !isErrorMessage) {
+                        System.out.print("Value is too high, please input a valid input: "); //TODO: update comment
                     } 
                 }
 

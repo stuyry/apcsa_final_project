@@ -25,7 +25,7 @@ public class MagicPoints extends Points {
 
     @Override
     public long getActualValue() { 
-        return getState().getActualValue(); 
+        return getState().getActualValue() * 20; 
         //TODO: add conversion factor and change the Points, maybe 1 2 3, might do switch??
     }
 
@@ -35,7 +35,7 @@ public class MagicPoints extends Points {
         int points = 0;
         System.out.print("Apply Credits towards MAG here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure
         System.out.print("Credit input for Magic: ");
-        points = new Reader().getInputAsInt();
+        points = new Reader().getInputAsIntCredits();
 
         Integer points2 = points;
 

@@ -73,5 +73,5 @@ public class Opponent {
         //for magic, (disable all magic)
         this.magic = magic;
     }
-    
+    //TODO: add a method for choosing attack
 }

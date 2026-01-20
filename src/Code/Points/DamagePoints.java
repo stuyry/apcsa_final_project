@@ -24,7 +24,8 @@ public class DamagePoints extends Points {
     }
     @Override
     public long getActualValue() { //accessed in state enum
-        return getState().getActualValue(); 
+        return getState().getActualValue() * 5;
+
         //TODO: add conversion factor and change the Points, maybe 1 2 3, might do switch??
     }
 
@@ -39,7 +40,7 @@ public class DamagePoints extends Points {
         int points = 0;
         System.out.print("Apply Credits towards DMG here!" + "\n");  //Buffered reader doesn't look at escape sequences Im pretty sure
         System.out.print("Credit input for damage: ");
-        points = new Reader().getInputAsInt();
+        points = new Reader().getInputAsIntCredits();
 
         Integer points2 = points;
 

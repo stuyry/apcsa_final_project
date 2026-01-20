@@ -12,7 +12,7 @@ public class Credits {
     }
 
     public Credits() { //TODO: fill in based on passive
-        credits = 150;
+        credits = 100;
     }
     
 }
