@@ -43,7 +43,8 @@ public class Battle {
     static double damageMultiplier = 0; //used as a variable to pass down from Attack interface
 
     public void applyBasedOnLuck() {
-        
+
+        if (userTurn) {
         System.out.println("Enter lucky numbers (1 - 10)"); 
         luckyLoopValue = (character.getLuck() / 10); //TODO: add magic values which will either be lost or applied
         if (luckyLoopValue < 10) { 
@@ -78,6 +79,43 @@ public class Battle {
             System.out.println ("Luck is maxed out! Move is automatically applied");
         }
     }
+
+    if (opponentTurn) {
+        System.out.println("Enter lucky numbers (1 - 10)"); 
+        luckyLoopValue = (opp.getLuck() / 10); //TODO: add magic values which will either be lost or applied
+        if (luckyLoopValue < 10) { 
+            while (luckyLoopValue > 0) {
+                readerHolder = -1;
+                if (luckyLoopValue == (character.getLuck() / 10)) {
+                    randomHolder = (long) new RandomNumber(10).getRandomNumber();
+                }
+                readerHolder = new Reader().getInputAsInt(10);
+
+                if (readerHolder == randomHolder) {
+                    System.out.print("\n");
+                    System.out.println("UNLUCKY, opponent's move was applied.");
+                    break;
+                }
+                if (luckyLoopValue == 1 && readerHolder != randomHolder) {
+                    System.out.print("\n");
+                    System.out.println("LUCKY, opponent's move was not applied");
+                    damageMultiplier = 0;
+
+                }
+                    luckyLoopValue -= 1;
+            }
+
+                luckyLoopValue = 0;
+                readerHolder = -1;
+                randomHolder = -1;
+        }
+
+        else {
+            System.out.print("\n");
+            System.out.println ("Luck is maxed out! Move is automatically applied");
+        }
+    }
+}
 
     public double getDefenseMultiplier() { //used to multiply against the attack/damage multiplier
         //ALL GOOD HERE!!
@@ -197,21 +235,26 @@ public class Battle {
                     case 1:
                         System.out.println("Opponent used Scratch");
                         System.out.print("\n");
-                        character.setHP(protagonistHP.get() - 50);//(protagonistHP.get() - (int)(character.getDMG() * damageMultiplier));
+                        damageMultiplier = Attack.Scratch.scratchMultipler;
+                        //character.setHP(protagonistHP.get() - 50);//(protagonistHP.get() - (int)(character.getDMG() * damageMultiplier));
                     break;
 
                     case 2:
                         System.out.println("Opponent used Jab");
                         System.out.print("\n");
-                        character.setHP(protagonistHP.get() - 20);
+                        damageMultiplier = Attack.Jab.jabMultiplier;
                     break;
 
                     case 3:
                         System.out.println("Opponent used Haymaker");
                         System.out.print("\n");
-                        character.setHP(protagonistHP.get() - 100);
+                        damageMultiplier = Attack.HayMaker.HayMakerMultiplier;
                     break;
                 }
+                applyBasedOnLuck();
+                character.setHP(protagonistHP.get() - (int)(opp.getDMG() * damageMultiplier));
+
+                damageMultiplier = 0;
                 wasUserTurn = false;
                 wasOpponentTurn = true;
             }
