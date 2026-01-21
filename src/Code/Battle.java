@@ -23,7 +23,7 @@ public class Battle {
     static boolean wasUserTurn = false;
     static boolean wasOpponentTurn = false;
 
-    static long magicCreditsAvailable = character.getMagicCredits();
+    static long magicCreditsToApplyClamped = character.getMagicCredits();
 
     static int characterFirstPick = -1;
     static int characterSecondPick = -1;
@@ -186,7 +186,10 @@ public class Battle {
                         case 2:
                             damageMultiplier = Attack.Jab.jabMultiplier;
                             isNormalAttack = true;
-                            character.setMagicCredits(character.getMagicCredits() + Attack.Jab.MagicGain);
+                            
+                            magicCreditsToApplyClamped = Math.clamp(character.getMagicCredits() + 6, 0, 10);
+                            character.setMagicCredits(magicCreditsToApplyClamped);
+
                             retryMagic = false;
                             applyBasedOnLuck();
                         break;
@@ -263,8 +266,8 @@ public class Battle {
                         break;
                         case 4:
                             System.out.println("Character regained 6 magic credits!");
-                            magicCreditsAvailable = Math.clamp(character.getMagicCredits() + 6, 0, 10);
-                            character.setMagicCredits(magicCreditsAvailable);
+                            magicCreditsToApplyClamped = Math.clamp(character.getMagicCredits() + 6, 0, 10);
+                            character.setMagicCredits(magicCreditsToApplyClamped);
                             
                             characterMagicTurnHolder += 0; //shouldn't impact anything
                             applyTurnHolder = false; 
@@ -304,6 +307,8 @@ public class Battle {
 
                 wasUserTurn = true;
                 wasOpponentTurn = false;
+
+                magicCreditsToApplyClamped = 0;
                 
             }
 
