@@ -17,6 +17,8 @@ public class Character { //TODO: make this a interface
     private final State magicState;
 
     private long magicCredits = 10;
+    
+    
 
     public Character(String name, long dmg, State dmgState, long def, State defState, long HP, State HPState, long luck, State luckState, long magic, State magicState) {
         this.name = name;
@@ -32,6 +34,7 @@ public class Character { //TODO: make this a interface
         this.luckState = luckState;
         this.magicState = magicState;
 
+        //Math.clamp(magicCredits, 0, 10);
     }
 
     public void printCharacterSummary() {
@@ -81,10 +84,13 @@ public class Character { //TODO: make this a interface
     }
 
     public long getMagicCredits() {
+        //Math.clamp(magicCredits, 0, 10);
         return magicCredits;
     }
 
     public void setMagicCredits(long magicCredits) {
+        //Math.clamp(magicCredits, 0, 10); //yes this is intended for parameter
+        //Math.clamp(this.magicCredits, 0, 10);
         this.magicCredits = magicCredits;
     }
 

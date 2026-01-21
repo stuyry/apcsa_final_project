@@ -16,11 +16,14 @@ public class Battle {
     //TODO: add turn counter
     static Supplier<Long> protagonistHP = () -> character.getHP();
     static Supplier<Long> antagonistHP = () -> opp.getHP();
+
     static boolean userTurn = true;
     static boolean opponentTurn = false;
 
     static boolean wasUserTurn = false;
     static boolean wasOpponentTurn = false;
+
+    static long magicCreditsAvailable = character.getMagicCredits();
 
     static int characterFirstPick = -1;
     static int characterSecondPick = -1;
@@ -110,7 +113,7 @@ public class Battle {
                     System.out.print("\n");
                     System.out.println("LUCKY, opponent's move was not applied");
                     damageMultiplier = 0;
-
+                    break;
                 }
                     luckyLoopValue -= 1;
             }
@@ -147,6 +150,7 @@ public class Battle {
             //     applyTurnHolder = true;
             // }
             turnNumber += 1;
+            System.out.println("Amount of magic left: " + character.getMagicCredits());
             System.out.print("\n");
             System.out.println("Turn # : " + turnNumber);
             System.out.print("\n");
@@ -156,6 +160,7 @@ public class Battle {
             System.out.println("TESTING: Opponenet's Defense: " + opp.getDEF() + "\n");
 
             if (userTurn && !opponentTurn) {
+                while(retryMagic) {
                 System.out.println("Pick Move: (1: Attack, 2: Magic, 3: Skip Turn)");
                 characterFirstPick = new Reader().getInputAsInt(3);
 
@@ -174,26 +179,37 @@ public class Battle {
                         case 1:
                             damageMultiplier = Attack.Scratch.scratchMultipler;
                             isNormalAttack = true;
-                           
+                            retryMagic = false;
+                            applyBasedOnLuck();
                         break;
 
                         case 2:
                             damageMultiplier = Attack.Jab.jabMultiplier;
                             isNormalAttack = true;
                             character.setMagicCredits(character.getMagicCredits() + Attack.Jab.MagicGain);
+                            retryMagic = false;
+                            applyBasedOnLuck();
                         break;
                             
                         case 3:
+                            if (character.getMagicCredits() < Attack.HayMaker.MagicDrain) {
+                                System.out.println ("Not Enough magic credits, please try again!");
+                                break;
+                            }
+                            else {
+                                retryMagic = false;
+                            }
                             damageMultiplier = Attack.HayMaker.HayMakerMultiplier;
                             isNormalAttack = true;
-                            character.setMagicCredits(character.getMagicCredits() - Attack.HayMaker.MagicDrain); //TODO: either remove or allow it to let magic go to negative
+                            character.setMagicCredits(character.getMagicCredits() - Attack.HayMaker.MagicDrain);
+                            applyBasedOnLuck(); //TODO: either remove or allow it to let magic go to negative
                         break;
                     }
-                    applyBasedOnLuck();
+                    
 
                     break; //i got scared but I realized I was missing a break for the first case
                     case 2:
-                    while (retryMagic) {
+                    
                         System.out.println("Pick Move: (1: Poison, 2: StickArms, 3: MagicSpellOfNausea, 4: RECHARGE)");
                         characterSecondPick = new Reader().getInputAsInt(4);
                         // if (characterSecondPick == 1 && character.getMagicCredits() ) {
@@ -247,7 +263,8 @@ public class Battle {
                         break;
                         case 4:
                             System.out.println("Character regained 6 magic credits!");
-                            character.setMagicCredits(character.getMagicCredits() + 6);
+                            magicCreditsAvailable = Math.clamp(character.getMagicCredits() + 6, 0, 10);
+                            character.setMagicCredits(magicCreditsAvailable);
                             
                             characterMagicTurnHolder += 0; //shouldn't impact anything
                             applyTurnHolder = false; 
@@ -255,15 +272,16 @@ public class Battle {
                             retryMagic = false;
                         break;
                     }
-                }
+                
                     break;
 
                     case 3:
                         opponentTurn = true;
                         userTurn = false;
+                        retryMagic = false;
                     break;
                 }
-
+            }
                 if (isNormalAttack && applyTurnHolder && characterMagicTurnHolder < 1) {//WHY I GET ERROR: applyTurnHolder becomes true at end all of the time, fixed??
                 //* new Attack().exampleAttack.getMultiplier()
                 System.out.println("TESTING: NO APPLICATION");
@@ -286,6 +304,7 @@ public class Battle {
 
                 wasUserTurn = true;
                 wasOpponentTurn = false;
+                
             }
 
             if (opponentTurn && !userTurn) { //TODO add while loop in random number to prevent 0
