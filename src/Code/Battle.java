@@ -33,7 +33,9 @@ public class Battle {
     static long randomHolder = 0; //used for lucky
     static int readerHolder = 0; //used for lucky
 
-    static int magicTurnHolder = 0; //used for applying magic turn after and compounding
+    static int characterMagicTurnHolder = 0;
+    static int oppMagicTurnHolder = 0;
+    //used for applying magic turn after and compounding
     static boolean applyTurnHolder = true; //other part of fix  //used for applying magic
 
     static boolean isNormalAttack = false; //used for logic on when to apply magic
@@ -121,13 +123,19 @@ public class Battle {
         //ALL GOOD HERE!!
         //TODO: make specifically for Poison
         //TODO: remove test case
-        System.out.println("TESTING: get Defense Multiplier value (IF NEGATIVE): " + (double)(1 + (Math.abs((double)opp.getDEF() - ((double)Magic.Poison.lowerDefense * (double)magicTurnHolder)) / 100.0))); //THIS WOULD NOT PRINT CORRECTLY, BUT TESTED AND THIS METHOD WORKS FINE
-        return ((double) opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) magicTurnHolder) < 0 ? 1 + (Math.abs((double) opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) magicTurnHolder)) / 100.0) : 1 + ((double) opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) magicTurnHolder)) / 100.0); 
+
+
+        //System.out.println("TESTING: get Defense Multiplier value (IF NEGATIVE): " + (double)(1 + (Math.abs((double)opp.getDEF() - ((double)Magic.Poison.lowerDefense * (double)characterMagicTurnHolder)) / 100.0))); //THIS WOULD NOT PRINT CORRECTLY, BUT TESTED AND THIS METHOD WORKS FINE
+        if (userTurn) {
+            return ((double) opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) characterMagicTurnHolder) < 0 ? 1 + (Math.abs((double) opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) characterMagicTurnHolder)) / 100.0) : 1 + ((double) opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) characterMagicTurnHolder)) / 100.0); 
+        }
+        //TODO: FINISH AFTER MAKING SEPERATE VARIABLES FOR TURNHOLDER AND FOR OPPONENT AND CHARACTER
+        return ((double) character.getDEF() - ((double) Magic.Poison.lowerDefense * (double) oppMagicTurnHolder) < 0 ? 1 + (Math.abs((double) opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) oppMagicTurnHolder)) / 100.0) : 1 + ((double) opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) oppMagicTurnHolder)) / 100.0); 
     }
 
     public void battle() {
         while(!(protagonistHP.get() <= 0 || antagonistHP.get() <= 0)) {
-            // if (magicTurnHolder == 1) {
+            // if (characterMagicTurnHolder == 1) {
             //     applyTurnHolder = true;
             // }
             turnNumber += 1;
@@ -183,19 +191,19 @@ public class Battle {
                     switch(characterSecondPick) {
                         case 1:
                             //lowerDefense = new Magic().getPoisonDefenseNegator(); 
-                            magicTurnHolder += 1;
+                            characterMagicTurnHolder += 1;
                             applyTurnHolder = false;
                             System.out.print("\n");
-                            System.out.println("TESTING: Magic Turn Holder Value: " + magicTurnHolder);
+                            System.out.println("TESTING: Magic Turn Holder Value: " + characterMagicTurnHolder);
                         break;//I FORGOT ALL 3 BREAKS, THANK GOD I DEBUGGED THIS :/
                         case 2: 
                             //lowerAtk = new Magic().getStickArmLowerAtk();
-                            magicTurnHolder += 1;
+                            characterMagicTurnHolder += 1;
                             applyTurnHolder = false;
                         break;
                         case 3:
                             //lowerLuck = new Magic().getMagicSpellOfNauseaLowerLuck();
-                            magicTurnHolder += 1;
+                            characterMagicTurnHolder += 1;
                             applyTurnHolder = false; // used so that if you play magic twice I can account for that by not applying right away (compound effect)
                         break;
                     }
@@ -207,15 +215,15 @@ public class Battle {
                     break;
                 }
 
-                if (isNormalAttack && applyTurnHolder && magicTurnHolder < 1) {//WHY I GET ERROR: applyTurnHolder becomes true at end all of the time, fixed??
+                if (isNormalAttack && applyTurnHolder && characterMagicTurnHolder < 1) {//WHY I GET ERROR: applyTurnHolder becomes true at end all of the time, fixed??
                 //* new Attack().exampleAttack.getMultiplier()
                 System.out.println("TESTING: NO APPLICATION");
                 opp.setHP(antagonistHP.get() - (int)(character.getDMG() * damageMultiplier)); //* ((opp.getDEF() - lowerDefense) / 100)));//character.getDMG());
                 }
-                else if (isNormalAttack && applyTurnHolder && magicTurnHolder >= 1) {
+                else if (isNormalAttack && applyTurnHolder && characterMagicTurnHolder >= 1) {
                     System.out.println("TESTING: APPLICATION !!");
                     opp.setHP(antagonistHP.get() - (int)(character.getDMG() * damageMultiplier * getDefenseMultiplier()));
-                    magicTurnHolder = 0;
+                    characterMagicTurnHolder = 0;
                     applyTurnHolder = false;
                 }
                 // lowerDefense = 0;
@@ -231,30 +239,53 @@ public class Battle {
 
             if (opponentTurn && !userTurn) { //TODO add while loop in random number to prevent 0
                 System.out.println("Opponent's Turn");
-                switch ((int) new RandomNumber(3).getRandomNumber()) { //random number being 0 caused issues
+                switch ((int) new RandomNumber(4).getRandomNumber()) { //random number being 0 caused issues
                     case 1:
                         System.out.println("Opponent used Scratch");
                         System.out.print("\n");
                         damageMultiplier = Attack.Scratch.scratchMultipler;
+                        isNormalAttack = true;
                         //character.setHP(protagonistHP.get() - 50);//(protagonistHP.get() - (int)(character.getDMG() * damageMultiplier));
+                        applyBasedOnLuck();
                     break;
 
                     case 2:
                         System.out.println("Opponent used Jab");
                         System.out.print("\n");
                         damageMultiplier = Attack.Jab.jabMultiplier;
+                        isNormalAttack = true;
+                        applyBasedOnLuck();
                     break;
 
                     case 3:
                         System.out.println("Opponent used Haymaker");
                         System.out.print("\n");
                         damageMultiplier = Attack.HayMaker.HayMakerMultiplier;
+                        isNormalAttack = true;
+                        applyBasedOnLuck();
+                    break;
+                    case 4:
+                        System.out.println("Opponent used POISON !");
+                        oppMagicTurnHolder += 1;
+                        applyTurnHolder = false;
                     break;
                 }
-                applyBasedOnLuck();
-                character.setHP(protagonistHP.get() - (int)(opp.getDMG() * damageMultiplier));
+                
+                if (isNormalAttack && applyTurnHolder && oppMagicTurnHolder < 1) {
+                    character.setHP(protagonistHP.get() - (int)(opp.getDMG() * damageMultiplier));
+                }
+
+                else if (isNormalAttack && applyTurnHolder && oppMagicTurnHolder >= 1) {
+                    character.setHP(protagonistHP.get() - (int)(opp.getDMG() * damageMultiplier * getDefenseMultiplier()));
+                    oppMagicTurnHolder = 0;
+                    applyTurnHolder = false;
+                }
+
+                isNormalAttack = false;
+                applyTurnHolder = true;
 
                 damageMultiplier = 0;
+
                 wasUserTurn = false;
                 wasOpponentTurn = true;
             }
