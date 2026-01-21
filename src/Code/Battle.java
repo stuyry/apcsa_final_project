@@ -25,6 +25,8 @@ public class Battle {
     static int characterFirstPick = -1;
     static int characterSecondPick = -1;
 
+    static boolean retryMagic = true;
+
     // static int lowerDefense = 0;
     // static int lowerAtk = 0;
     // static int lowerLuck = 0;
@@ -84,21 +86,27 @@ public class Battle {
 
     if (opponentTurn) {
         System.out.println("Enter lucky numbers (1 - 10)"); 
-        luckyLoopValue = (opp.getLuck() / 10); //TODO: add magic values which will either be lost or applied
-        if (luckyLoopValue < 10) { 
+        luckyLoopValue = (10 - (opp.getLuck() / 10)); //TODO: add magic values which will either be lost or applied
+        if (luckyLoopValue != 0) { 
             while (luckyLoopValue > 0) {
                 readerHolder = -1;
-                if (luckyLoopValue == (character.getLuck() / 10)) {
+                if (luckyLoopValue == (10 - (opp.getLuck() / 10))) {
+                    //caused an error lol
+
+                    //System.out.println("TESTING: Reached applying the random value");
                     randomHolder = (long) new RandomNumber(10).getRandomNumber();
+                    //System.out.println(randomHolder);
+
+                    //100% works
                 }
                 readerHolder = new Reader().getInputAsInt(10);
 
-                if (readerHolder == randomHolder) {
+                if (luckyLoopValue == 1 && readerHolder != randomHolder) { //reversed the logic oops
                     System.out.print("\n");
                     System.out.println("UNLUCKY, opponent's move was applied.");
                     break;
                 }
-                if (luckyLoopValue == 1 && readerHolder != randomHolder) {
+                if (readerHolder == randomHolder) { //reversed the logic oopsie
                     System.out.print("\n");
                     System.out.println("LUCKY, opponent's move was not applied");
                     damageMultiplier = 0;
@@ -114,7 +122,7 @@ public class Battle {
 
         else {
             System.out.print("\n");
-            System.out.println ("Luck is maxed out! Move is automatically applied");
+            System.out.println ("Opponent's luck is maxed out! Move is automatically applied");
         }
     }
 }
@@ -166,30 +174,45 @@ public class Battle {
                         case 1:
                             damageMultiplier = Attack.Scratch.scratchMultipler;
                             isNormalAttack = true;
+                           
                         break;
 
                         case 2:
                             damageMultiplier = Attack.Jab.jabMultiplier;
                             isNormalAttack = true;
+                            character.setMagicCredits(character.getMagicCredits() + Attack.Jab.MagicGain);
                         break;
                             
                         case 3:
                             damageMultiplier = Attack.HayMaker.HayMakerMultiplier;
                             isNormalAttack = true;
+                            character.setMagicCredits(character.getMagicCredits() - Attack.HayMaker.MagicDrain); //TODO: either remove or allow it to let magic go to negative
                         break;
                     }
                     applyBasedOnLuck();
 
                     break; //i got scared but I realized I was missing a break for the first case
                     case 2:
-                    System.out.println("Pick Move: (1: Poison, 2: StickArms, 3: MagicSpellOfNausea)");
-                    characterSecondPick = new Reader().getInputAsInt(3);
-
+                    while (retryMagic) {
+                        System.out.println("Pick Move: (1: Poison, 2: StickArms, 3: MagicSpellOfNausea, 4: RECHARGE)");
+                        characterSecondPick = new Reader().getInputAsInt(4);
+                        // if (characterSecondPick == 1 && character.getMagicCredits() ) {
+                        //if putting in switch cases no work then I will come back to this
+                        // }
+                    // from the while retry magic}
                     System.out.print("\n");
                     System.out.println("RECEIVED: " + characterSecondPick);
-
+                    
                     switch(characterSecondPick) {
                         case 1:
+                            if (character.getMagicCredits() < Magic.Poison.MagicDrain) {
+                                System.out.println("Not Enough magic credits, please try again!");
+                                break;
+                            }
+                            else {
+                                retryMagic = false;
+                            }
+                            character.setMagicCredits(character.getMagicCredits() - Magic.Poison.MagicDrain);
                             //lowerDefense = new Magic().getPoisonDefenseNegator(); 
                             characterMagicTurnHolder += 1;
                             applyTurnHolder = false;
@@ -197,16 +220,42 @@ public class Battle {
                             System.out.println("TESTING: Magic Turn Holder Value: " + characterMagicTurnHolder);
                         break;//I FORGOT ALL 3 BREAKS, THANK GOD I DEBUGGED THIS :/
                         case 2: 
+                            if (character.getMagicCredits() < Magic.StickArms.MagicDrain) {
+                                System.out.println("Not Enough magic credits, please try again!");
+                                break;
+                            }
+                            else {
+                                retryMagic = false;
+                            }
+                            character.setMagicCredits(character.getMagicCredits() - Magic.StickArms.MagicDrain);
                             //lowerAtk = new Magic().getStickArmLowerAtk();
                             characterMagicTurnHolder += 1;
                             applyTurnHolder = false;
                         break;
                         case 3:
+                            if (character.getMagicCredits() < Magic.MagicSpellOfNausea.MagicDrain) {
+                                System.out.println("Not Enough magic credits, please try again!");
+                                break;
+                            }
+                            else {
+                                retryMagic = false;
+                            }
+                            character.setMagicCredits(character.getMagicCredits() - Magic.MagicSpellOfNausea.MagicDrain);
                             //lowerLuck = new Magic().getMagicSpellOfNauseaLowerLuck();
-                            characterMagicTurnHolder += 1;
+                            characterMagicTurnHolder += 1; //TODO: update for each magic attack
                             applyTurnHolder = false; // used so that if you play magic twice I can account for that by not applying right away (compound effect)
                         break;
+                        case 4:
+                            System.out.println("Character regained 6 magic credits!");
+                            character.setMagicCredits(character.getMagicCredits() + 6);
+                            
+                            characterMagicTurnHolder += 0; //shouldn't impact anything
+                            applyTurnHolder = false; 
+
+                            retryMagic = false;
+                        break;
                     }
+                }
                     break;
 
                     case 3:
@@ -232,6 +281,8 @@ public class Battle {
                 damageMultiplier = 0; 
                 isNormalAttack = false;
                 applyTurnHolder = true;
+
+                retryMagic = true;
 
                 wasUserTurn = true;
                 wasOpponentTurn = false;

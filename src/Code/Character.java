@@ -16,6 +16,8 @@ public class Character { //TODO: make this a interface
     private final State luckState;
     private final State magicState;
 
+    private long magicCredits = 10;
+
     public Character(String name, long dmg, State dmgState, long def, State defState, long HP, State HPState, long luck, State luckState, long magic, State magicState) {
         this.name = name;
         this.dmg = dmg;
@@ -76,6 +78,14 @@ public class Character { //TODO: make this a interface
     public void setMagic(long magic) {
         //for magic, (disable all magic)
         this.magic = magic;
+    }
+
+    public long getMagicCredits() {
+        return magicCredits;
+    }
+
+    public void setMagicCredits(long magicCredits) {
+        this.magicCredits = magicCredits;
     }
 
     //TODO: Potentially add disabled state / skip turn state?? / turn Over state??
