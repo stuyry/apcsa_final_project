@@ -22,10 +22,18 @@ public class Main {
     static Name name;
     static Character character;
 
+    private static String holderForDifficulty;
+
+    private static int selectDifficulty = 0;
+
     //static String name = "";
 
     public void setCreditsFromMain(Integer setValue) { //in the end i want these two methods to be only static but that's just being picky
         credit.setCredits(setValue);
+    }
+
+    static int getDifficultyFromMain() {
+        return selectDifficulty;
     }
 
     public Integer getCreditsFromMain() { //FIXED: this constantly returns the starting amount
@@ -57,7 +65,27 @@ public class Main {
         System.out.println("Credits unused (applied as negation to Opponent HP): " + credits.get() + "");
         System.out.print("\n");
         character = new Character(name.getName(), damagePoints.getActualValue(), damagePoints.getState(), defensePoints.getActualValue(), defensePoints.getState(), healthPoints.getActualValue(), healthPoints.getState(), luckPoints.getActualValue(), luckPoints.getState(), magicPoints.getActualValue(), magicPoints.getState());
-        
+        System.out.println("Select your difficulty: [1] Easy [2] Medium [3] Hard" + "\n" );
+        holderForDifficulty = "" + new Reader().getInputAsInt(3) + "";
+        System.out.println("RECEIVED: " + holderForDifficulty);
+        System.out.println("\n");
+
+        switch (Integer.parseInt(holderForDifficulty)) {
+            case 1: 
+                System.out.println("EASY" + "\n");
+                selectDifficulty = 20;
+            break;
+    
+            case 2: 
+                System.out.println("MEDIUM" + "\n");
+                selectDifficulty = 35;
+            break;
+
+            case 3:
+                System.out.println("HARD" + "\n");
+                selectDifficulty = 50;
+            break;
+        }
         character.printCharacterSummary();
 
         new Battle().battle();

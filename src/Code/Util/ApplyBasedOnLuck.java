@@ -51,9 +51,6 @@ public class ApplyBasedOnLuck {
 
         //TODO: add magic values which will either be lost or applied
         if (luckyLoopValue < 10) { 
-            if (luckyLoopValue == 1) {
-                System.out.println("OPPONENTS SPELL WORKED!");
-            }
             while (luckyLoopValue > 0) {
                 readerHolder = -1;
                 if (luckyLoopValue == (Battle.character.getLuck() / 10)) {
@@ -62,6 +59,10 @@ public class ApplyBasedOnLuck {
                 readerHolder = new Reader().getInputAsInt(10);
 
                 if (readerHolder == randomHolder) {
+                    if (luckyLoopValue == ((Battle.character.getLuck() - (Magic.MagicSpellOfNausea.lowerLuck * oppNauseaTurnHolder)) / 10) || new RandomNumber(100).getRandomNumber() <= Battle.character.getLuck()) {
+                        System.out.println("CRITICAL HIT ! Damage Multiplier DOUBLED"); 
+                        Battle.damageMultiplier *= 2;
+                    }
                     System.out.print("\n");
                     System.out.println("LUCKY, move applied.");
                     break;
@@ -91,9 +92,6 @@ public class ApplyBasedOnLuck {
         luckyLoopValue = (10 - ((Battle.opp.getLuck() - (Magic.MagicSpellOfNausea.lowerLuck * characterNauseaMagicTurnHolder)) / 10)); //TODO: add magic values which will either be lost or applied
         //System.out.println("TEST: the turn holder value " + characterNauseaMagicTurnHolder);
         if (luckyLoopValue != 0) { 
-            if (luckyLoopValue == 6 || luckyLoopValue == 9 || luckyLoopValue == 4) {
-                System.out.println("TEST: The Spell of Nausea worked!");
-            }
             while (luckyLoopValue > 0) {
                 readerHolder = -1;
                 if (luckyLoopValue == (10 - (Battle.opp.getLuck() / 10))) {

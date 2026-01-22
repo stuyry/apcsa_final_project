@@ -21,14 +21,14 @@ public class Opponent {
 
     private long magicCredits;
 
-    public void applyCreditsTowardsAttributes() { //TODO: THIS IS OKAY.. -> Will add logic later, just want to get a rough draft of battle actual working
-        healthPoints.setPoints(new RandomNumber(50).getRandomNumber()); 
-        damagePoints.setPoints(new RandomNumber(50).getRandomNumber());
-        defensePoints.setPoints(new RandomNumber(50).getRandomNumber());
-        //magicPoints.setPoints(new RandomNumber(50).getRandomNumber());
+    public void applyCreditsTowardsAttributes(int multiplier) { //TODO: THIS IS OKAY.. -> Will add logic later, just want to get a rough draft of battle actual working
+        healthPoints.setPoints(new RandomNumber(multiplier).getRandomNumber()); 
+        damagePoints.setPoints(new RandomNumber(multiplier).getRandomNumber());
+        defensePoints.setPoints(new RandomNumber(multiplier).getRandomNumber());
+        magicPoints.setPoints(new RandomNumber(multiplier).getRandomNumber());
         //damagePoints.setPoints(50);
-        defensePoints.setPoints(0);
-        luckPoints.setPoints(new RandomNumber(50).getRandomNumber());
+        //defensePoints.setPoints(0);
+        luckPoints.setPoints(new RandomNumber(multiplier).getRandomNumber());
         //luckPoints.setPoints(50);
 
         healthPoints.applyState();
