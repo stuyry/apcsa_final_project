@@ -6,7 +6,7 @@ public interface Magic {
         int MagicDrain = 5;
     }
 
-    public interface StickArms { //Weaken
+    public interface Weaken { //Weaken
         int lowerAtk = 10;
         int MagicDrain = 3;
     }

@@ -19,13 +19,15 @@ public class Opponent {
     private long luck;
     private long magic;
 
+    private long magicCredits;
+
     public void applyCreditsTowardsAttributes() { //TODO: THIS IS OKAY.. -> Will add logic later, just want to get a rough draft of battle actual working
         healthPoints.setPoints(new RandomNumber(50).getRandomNumber()); 
         damagePoints.setPoints(new RandomNumber(50).getRandomNumber());
         defensePoints.setPoints(new RandomNumber(50).getRandomNumber());
-        magicPoints.setPoints(new RandomNumber(50).getRandomNumber());
+        //magicPoints.setPoints(new RandomNumber(50).getRandomNumber());
         //damagePoints.setPoints(50);
-        //defensePoints.setPoints(0);
+        defensePoints.setPoints(0);
         luckPoints.setPoints(new RandomNumber(50).getRandomNumber());
         //luckPoints.setPoints(50);
 
@@ -40,6 +42,8 @@ public class Opponent {
         HP = healthPoints.getActualValue();
         luck = luckPoints.getActualValue();
         magic = magicPoints.getActualValue();
+
+        magicCredits = 10;
     }
 
     public long getHP() {
@@ -75,6 +79,14 @@ public class Opponent {
     public void setMagic(long magic) {
         //for magic, (disable all magic)
         this.magic = magic;
+    }
+
+    public long getMagicCredits() {
+        return magicCredits;
+    }
+
+    public void setMagicCredits(long magicCredits) {
+        this.magicCredits = magicCredits;
     }
     //TODO: RESOLVED (via switch) add a method for choosing attack
 }
