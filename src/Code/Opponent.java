@@ -24,8 +24,10 @@ public class Opponent {
         damagePoints.setPoints(new RandomNumber(50).getRandomNumber());
         defensePoints.setPoints(new RandomNumber(50).getRandomNumber());
         magicPoints.setPoints(new RandomNumber(50).getRandomNumber());
-        //luckPoints.setPoints(new RandomNumber(50).getRandomNumber());
-        luckPoints.setPoints(0);
+        //damagePoints.setPoints(50);
+        //defensePoints.setPoints(0);
+        luckPoints.setPoints(new RandomNumber(50).getRandomNumber());
+        //luckPoints.setPoints(50);
 
         healthPoints.applyState();
         damagePoints.applyState();

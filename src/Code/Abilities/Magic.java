@@ -14,7 +14,7 @@ public interface Magic {
     public interface MagicSpellOfNausea { //make Dizzy
         int lowerLuck = 40;
         int MagicDrain = 7;
-        int lowerSelfDefense = 200;
+        int lowerSelfDefense = 100;
     }
 }
     // public int getPoisonDefenseNegator() {
