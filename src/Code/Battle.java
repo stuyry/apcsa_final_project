@@ -48,13 +48,11 @@ public class Battle {
     public static boolean retryMagic = true;
     public static boolean oppRetry = true;
 
-    // static int lowerDefense = 0;
-    // static int lowerAtk = 0;
-    // static int lowerLuck = 0;
+    
 
-     public static long luckyLoopValue = 0; //used for lucky
-     public static long randomHolder = 0; //used for lucky
-     public static int readerHolder = 0; //used for lucky
+     public static long luckyLoopValue = 0; 
+     public static long randomHolder = 0; 
+     public static int readerHolder = 0; 
 
     public static int characterPoisonMagicTurnHolder = 0;
     public static int characterWeakenMagicTurnHolder = 0;
@@ -63,14 +61,14 @@ public class Battle {
     public static int oppPoisonTurnHolder = 0;
     public static int oppNauseaTurnHolder = 0;
     public static int oppWeakenTurnHolder = 0;
-    //used for applying magic turn after and compounding
-    public static boolean applyTurnHolder = true; //other part of fix  //used for applying magic
+    
+    public static boolean applyTurnHolder = true; 
 
-    public static boolean isNormalAttack = false; //used for logic on when to apply magic
+    public static boolean isNormalAttack = false; 
 
-    //static int magicApplier = 0;
+    
 
-    public static double damageMultiplier = 0; //used as a variable to pass down from Attack interface
+    public static double damageMultiplier = 0; 
 
  
 
@@ -80,18 +78,31 @@ public class Battle {
 
     public void battle() {
         while(!(protagonistHP.get() <= 0 || antagonistHP.get() <= 0)) {
-            // if (characterPoisonMagicTurnHolder == 1) {
-            //     applyTurnHolder = true;
-            // }
             turnNumber += 1;
             
             System.out.print("\n");
             System.out.println("Turn # : " + turnNumber);
             System.out.print("\n");
 
-           // DEBUGGING NAUSEA 
-             System.out.println("Current HP: " + protagonistHP.get() + "");
+          
+             System.out.println("Current HP: " + protagonistHP.get() + ""); //TODO: fill in
              System.out.println("Opponent's HP: " + antagonistHP.get() + "\n");
+             System.out.print("\n");
+
+             System.out.println("Current DEF: " + ((double) Battle.character.getDEF() - ((double) Magic.Poison.lowerDefense * (double) Battle.oppPoisonTurnHolder) - ((double) Magic.MagicSpellOfNausea.lowerSelfDefense * Battle.characterNauseaMagicTurnHolder)) + "");
+             System.out.println("Opponent's DEF: " + ((double) Battle.opp.getDEF() - ((double) Magic.Poison.lowerDefense * (double) Battle.characterPoisonMagicTurnHolder) - ((double) Magic.MagicSpellOfNausea.lowerSelfDefense * Battle.oppNauseaTurnHolder)) + "\n");
+             System.out.print("\n");
+
+             System.out.println("Current ATK: " + ((int)((double)character.getDMG() - ((double)oppWeakenTurnHolder * (double)Magic.Weaken.lowerAtk))) + "");
+             System.out.println("Opponent's ATK: " + ((int)((opp.getDMG() - (Magic.Weaken.lowerAtk * characterWeakenMagicTurnHolder)))) + "\n");
+             System.out.print("\n");
+
+             System.out.println("Current LUCK: " + (Battle.character.getLuck() - (Magic.MagicSpellOfNausea.lowerLuck * oppNauseaTurnHolder)) + "");
+             System.out.println("Opponent's LUCK: " + (Battle.opp.getLuck() - (Magic.MagicSpellOfNausea.lowerLuck * characterNauseaMagicTurnHolder)) + "\n");
+             System.out.print("\n");
+
+             System.out.println("Current MAGIC: " + character.getMagic() + "");
+             System.out.println("Opponent's MAGIC: " + opp.getMagic() + "\n");
              System.out.print("\n");
 
              System.out.println("Amount of magic left: " + character.getMagicCredits());

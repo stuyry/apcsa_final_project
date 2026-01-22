@@ -9,47 +9,36 @@ public class ApplyBasedOnLuck {
     static boolean userTurn;
     static boolean opponentTurn;
 
-    static long luckyLoopValue; //used for lucky
-    static long randomHolder; //used for lucky
-    static int readerHolder; //used for lucky
+    static long luckyLoopValue;
+    static long randomHolder; 
+    static int readerHolder; 
 
-    //static Code.Character character; 
-    //static Opponent opp;
-
-    //not done
     static int oppNauseaTurnHolder;
     static int characterNauseaMagicTurnHolder;
-    //static double damageMultiplier;
+    ;
     
     public ApplyBasedOnLuck () {
         userTurn = Battle.userTurn;
         opponentTurn = Battle.opponentTurn;
 
-        // luckyLoopValue = super.luckyLoopValue;
-        // randomHolder = super.randomHolder;
-        // readerHolder = super.readerHolder;
-
         luckyLoopValue = 0;
         randomHolder = 0;
         readerHolder = 0;
 
-        //character = super.character;
-        //opp = super.opp;
-
         oppNauseaTurnHolder = Battle.oppNauseaTurnHolder;
         characterNauseaMagicTurnHolder = Battle.characterNauseaMagicTurnHolder;
-        //damageMultiplier = super.damageMultiplier;
+       
     }
     public void applyBasedOnLuck() {
 
         if (userTurn) {
         System.out.println("Enter lucky numbers (1 - 10)"); 
-        //System.out.println((character.getLuck() - (Magic.MagicSpellOfNausea.lowerLuck * characterNauseaMagicTurnHolder)) / 10);
-        luckyLoopValue = ((Battle.character.getLuck() - (Magic.MagicSpellOfNausea.lowerLuck * oppNauseaTurnHolder)) / 10); //TODO: UPDATE WITH OPPONENT TURN HOLDER
-        //System.out.println("TEST: the turn holder (OPPONENT INFLICTED) value " + oppNauseaTurnHolder); //OPPONENT WORKS!!
+        
+        luckyLoopValue = ((Battle.character.getLuck() - (Magic.MagicSpellOfNausea.lowerLuck * oppNauseaTurnHolder)) / 10); 
+        
         
 
-        //TODO: add magic values which will either be lost or applied
+        
         if (luckyLoopValue < 10) { 
             while (luckyLoopValue > 0) {
                 readerHolder = -1;
