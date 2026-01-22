@@ -4,6 +4,15 @@ import Code.Abilities.Attack;
 import Code.Abilities.Magic;
 import Code.Util.ApplyBasedOnLuck;
 import Code.Util.GetMultiplierValueBasedOnMagicAndDefense;
+import Code.Util.CharacterSequences.CharacterHaymakerSequence;
+import Code.Util.CharacterSequences.CharacterJabSequence;
+import Code.Util.CharacterSequences.CharacterNauseaSequence;
+import Code.Util.CharacterSequences.CharacterPoisonSequence;
+import Code.Util.CharacterSequences.CharacterRecharge;
+import Code.Util.CharacterSequences.CharacterScratchSequence;
+import Code.Util.CharacterSequences.CharacterSkipTurn;
+import Code.Util.CharacterSequences.CharacterWeakenSeqeuence;
+
 import java.util.function.Supplier;
 
 //Class made for ease of implementation
@@ -22,16 +31,16 @@ public class Battle {
     public static boolean userTurn = true;
     public static boolean opponentTurn = false;
 
-    static boolean wasUserTurn = false;
-    static boolean wasOpponentTurn = false;
+    public static boolean wasUserTurn = false;
+    public static boolean wasOpponentTurn = false;
 
-    static long magicCharacterCreditsToApplyClamped = character.getMagicCredits();
-    static long magicOpponentCreditsToApplyClamped = opp.getMagicCredits();
+    public static long magicCharacterCreditsToApplyClamped = character.getMagicCredits();
+    public static long magicOpponentCreditsToApplyClamped = opp.getMagicCredits();
 
     static int characterFirstPick = -1;
     static int characterSecondPick = -1;
 
-    static boolean retryMagic = true;
+    public static boolean retryMagic = true;
     static boolean oppRetry = true;
 
     // static int lowerDefense = 0;
@@ -50,9 +59,9 @@ public class Battle {
     public static int oppNauseaTurnHolder = 0;
     public static int oppWeakenTurnHolder = 0;
     //used for applying magic turn after and compounding
-    static boolean applyTurnHolder = true; //other part of fix  //used for applying magic
+    public static boolean applyTurnHolder = true; //other part of fix  //used for applying magic
 
-    static boolean isNormalAttack = false; //used for logic on when to apply magic
+    public static boolean isNormalAttack = false; //used for logic on when to apply magic
 
     //static int magicApplier = 0;
 
@@ -70,7 +79,7 @@ public class Battle {
             //     applyTurnHolder = true;
             // }
             turnNumber += 1;
-            System.out.println("Amount of magic left: " + character.getMagicCredits());
+            
             System.out.print("\n");
             System.out.println("Turn # : " + turnNumber);
             System.out.print("\n");
@@ -78,6 +87,9 @@ public class Battle {
            // DEBUGGING NAUSEA 
              System.out.println("Current HP: " + protagonistHP.get() + "");
              System.out.println("Opponent's HP: " + antagonistHP.get() + "\n");
+             System.out.print("\n");
+
+             System.out.println("Amount of magic left: " + character.getMagicCredits());
             // //System.out.println("TESTING: Opponenet's Defense: " + opp.getDEF() + "\n");
             // System.out.println("MAGIC STATS: ");
             // System.out.println("Character defense: " + (double) character.getDEF());
@@ -93,12 +105,12 @@ public class Battle {
 
            // System.out.println("CHARACTER: Nausea applied? " + characterNauseaMagicTurnHolder);
             //System.out.println("CHARACTER: DID IT IMPACT HIS CHANCES? " +  "LUCK:" + opp.getLuck() + " NEW luck: " + (opp.getLuck() - (Magic.MagicSpellOfNausea.lowerLuck * characterNauseaMagicTurnHolder)));
-            System.out.println("OPPONENT MAGIC LEVEL " + opp.getMagicCredits());
+            //System.out.println("OPPONENT MAGIC LEVEL " + opp.getMagicCredits());
             
 
             if (userTurn && !opponentTurn) {
                 while(retryMagic) {
-                System.out.println("Pick Move: (1: Attack, 2: Magic, 3: Skip Turn)");
+                System.out.println("Pick Move:" + "\n" + "[1] Attack  [2] Magic  [3] Skip Turn)");
                 characterFirstPick = new Reader().getInputAsInt(3);
 
                 System.out.println("RECEIVED: " + characterFirstPick);
@@ -106,7 +118,7 @@ public class Battle {
                 
                 switch(characterFirstPick) {
                     case 1: 
-                    System.out.println("Pick Move: (1: Scratch, 2: Jab, 3: HayMaker)");
+                    System.out.println("Pick Move: " + "\n" + "[1] Scratch  [2] Jab  [3] HayMaker)");
                     characterSecondPick = new Reader().getInputAsInt(3);
 
                     System.out.print("\n");
@@ -114,37 +126,15 @@ public class Battle {
 
                     switch(characterSecondPick) { //moves attack
                         case 1:
-                            damageMultiplier = Attack.Scratch.scratchMultipler;
-                            isNormalAttack = true;
-                            retryMagic = false;
-                            new ApplyBasedOnLuck().applyBasedOnLuck();
+                            new CharacterScratchSequence().Scratch();
                         break;
 
                         case 2:
-                            damageMultiplier = Attack.Jab.jabMultiplier;
-                            isNormalAttack = true;
-
-                            magicCharacterCreditsToApplyClamped = Math.clamp(character.getMagicCredits() + Attack.Jab.MagicGain, 0, 10);
-                            character.setMagicCredits(magicCharacterCreditsToApplyClamped);
-
-                            retryMagic = false;
-                            
-                            new ApplyBasedOnLuck().applyBasedOnLuck();
+                            new CharacterJabSequence().Jab();
                         break;
                             
                         case 3:
-                            if (character.getMagicCredits() < Attack.HayMaker.MagicDrain) {
-                                System.out.println ("Not Enough magic credits, please try again!");
-                                break;
-                            }
-                            else {
-                                retryMagic = false;
-                                damageMultiplier = Attack.HayMaker.HayMakerMultiplier;
-                                isNormalAttack = true;
-                                character.setMagicCredits(character.getMagicCredits() - Attack.HayMaker.MagicDrain);
-                                
-                                new ApplyBasedOnLuck().applyBasedOnLuck();
-                            }
+                            new CharacterHaymakerSequence().HayMaker();
                              //TODO: either remove or allow it to let magic go to negative
                         break;
                     }
@@ -160,84 +150,23 @@ public class Battle {
                     
                     switch(characterSecondPick) {
                         case 1:
-                            if (character.getMagicCredits() < Magic.Poison.MagicDrain) {
-                                System.out.println("Not Enough magic credits, please try again!");
-                                break;
-                            }
-                            else {
-                                retryMagic = false; //Boolean 
-                                applyTurnHolder = false; //Boolean
-
-                                characterPoisonMagicTurnHolder += 1; //Set
-                                character.setMagicCredits(character.getMagicCredits() - Magic.Poison.MagicDrain); //Set
-
-                                System.out.print("\n"); //Format
-                               // System.out.println("TESTING: Magic Turn Holder Value: " + characterPoisonMagicTurnHolder); //Format
-                            }
-                        
-                            
+                            new CharacterPoisonSequence().Poison();
                         break;
                         case 2: 
-                            if (character.getMagicCredits() < Magic.Weaken.MagicDrain) {
-                                System.out.println("Not Enough magic credits, please try again!"); 
-                                break; 
-                            } 
-                            else {
-                                retryMagic = false;
-                                applyTurnHolder = false;
-
-                                characterWeakenMagicTurnHolder += 1;
-                                character.setMagicCredits(character.getMagicCredits() - Magic.Weaken.MagicDrain); 
-                            //lowerAtk = new Magic().getStickArmLowerAtk();
-                            
-                             
-                            }
-                            
+                            new CharacterWeakenSeqeuence().Weaken();
                         break;
                         case 3:
-                            if (character.getMagicCredits() < Magic.MagicSpellOfNausea.MagicDrain) {
-                                System.out.println("Not Enough magic credits, please try again!");
-                                break;
-                            }
-                            else {
-                                
-                                retryMagic = false; //boolean
-                                applyTurnHolder = false; //boolean
-
-                                characterNauseaMagicTurnHolder += 1; //Set
-                                character.setMagicCredits(character.getMagicCredits() - Magic.MagicSpellOfNausea.MagicDrain); //Set
-
-        //                         System.out.println((double) character.getDEF() - 
-        // ((double) Magic.Poison.lowerDefense * (double) oppPoisonTurnHolder) - 
-        // ((double) Magic.MagicSpellOfNausea.lowerSelfDefense * characterNauseaMagicTurnHolder));
-
-        // System.out.println(1 + (Math.abs((double) character.getDEF() -
-        // ((double) Magic.Poison.lowerDefense * (double) oppPoisonTurnHolder) - 
-        // ((double) Magic.MagicSpellOfNausea.lowerSelfDefense * characterNauseaMagicTurnHolder)) / 100.0));
-
-                                //System.out.println("NAUSEA TURN HOLDER VALUE " + characterNauseaMagicTurnHolder + ""); //Format
-                            }
-                            
+                            new CharacterNauseaSequence().Nausea();    
                         break;
                         case 4:
-                            System.out.println("Character regained 6 magic credits!"); //Format
-
-                            magicCharacterCreditsToApplyClamped = Math.clamp(character.getMagicCredits() + 6, 0, 10); //Apply
-                            character.setMagicCredits(magicCharacterCreditsToApplyClamped); //Apply
-                            
-                            //characterPoisonMagicTurnHolder += 0; //shouldn't impact anything
-                            applyTurnHolder = false; 
-
-                            retryMagic = false;
+                            new CharacterRecharge().Recharge();
                         break;
                     }
                 
                     break;
 
                     case 3:
-                        opponentTurn = true;
-                        userTurn = false;
-                        retryMagic = false;
+                        new CharacterSkipTurn().Skip();
                     break;
                 }
             }
@@ -288,7 +217,7 @@ public class Battle {
                 System.out.println("Opponent's Turn");
                 switch ((int) new RandomNumber(6).getRandomNumber()) { //random number being 0 caused issues
                     case 1:
-                        System.out.println("Opponent used Scratch");
+                        System.out.println("Opponent used SCRATCH !");
                         System.out.print("\n");
 
                         damageMultiplier = Attack.Scratch.scratchMultipler;
@@ -298,7 +227,7 @@ public class Battle {
                     break;
 
                     case 2:
-                        System.out.println("Opponent used Jab");
+                        System.out.println("Opponent used JAB !");
                         System.out.print("\n");
 
                         damageMultiplier = Attack.Jab.jabMultiplier;
@@ -318,7 +247,7 @@ public class Battle {
                             switch ((int) new RandomNumber(3).getRandomNumber()) {
                                 case 1: //DOESNT MATTER IF I REMOVE BECAUSE WILL REDO AND SKIP OVER THIS
                                     if (opp.getMagicCredits() - 2 < 0) { //copied and pasted from above
-                                        System.out.println("Opponent used Haymaker");
+                                        System.out.println("Opponent used HAYMAKER !");
                                         System.out.print("\n");
 
                                         damageMultiplier = Attack.HayMaker.HayMakerMultiplier;
@@ -329,7 +258,7 @@ public class Battle {
                                     }
                                 break;
                                 case 2:
-                                    System.out.println("Opponent used Jab");
+                                    System.out.println("Opponent used JAB !");
                                         System.out.print("\n");
 
                                         damageMultiplier = Attack.Jab.jabMultiplier;
@@ -357,7 +286,7 @@ public class Battle {
                         }
                         break;
                         }
-                        System.out.println("Opponent used Haymaker");
+                        System.out.println("Opponent used HAYMAKER !");
 
                         opp.setMagicCredits(opp.getMagicCredits() - Attack.HayMaker.MagicDrain);
                         damageMultiplier = Attack.HayMaker.HayMakerMultiplier;
@@ -372,7 +301,7 @@ public class Battle {
                             switch ((int) new RandomNumber(3).getRandomNumber()) {
                                 case 1:
                                     if (opp.getMagicCredits() - 2 < 0) { //copied and pasted from above
-                                        System.out.println("Opponent used Haymaker");
+                                        System.out.println("Opponent used HAYMAKER !");
                                         System.out.print("\n");
 
                                         damageMultiplier = Attack.HayMaker.HayMakerMultiplier;
@@ -383,7 +312,7 @@ public class Battle {
                                     }
                                 break;
                                 case 2:
-                                    System.out.println("Opponent used Jab");
+                                    System.out.println("Opponent used JAB !");
                                         System.out.print("\n");
 
                                         damageMultiplier = Attack.Jab.jabMultiplier;
@@ -424,7 +353,7 @@ public class Battle {
                             switch ((int) new RandomNumber(3).getRandomNumber()) {
                                 case 1:
                                     if (opp.getMagicCredits() - 2 < 0) { //copied and pasted from above
-                                        System.out.println("Opponent used Haymaker");
+                                        System.out.println("Opponent used HAYMAKER !");
                                         System.out.print("\n");
 
                                         damageMultiplier = Attack.HayMaker.HayMakerMultiplier;
@@ -435,7 +364,7 @@ public class Battle {
                                     }
                                 break;
                                 case 2:
-                                    System.out.println("Opponent used Jab");
+                                    System.out.println("Opponent used JAB !");
                                         System.out.print("\n");
 
                                         damageMultiplier = Attack.Jab.jabMultiplier;
@@ -477,7 +406,7 @@ public class Battle {
                             switch ((int) new RandomNumber(3).getRandomNumber()) {
                                 case 1:
                                     if (opp.getMagicCredits() - 2 < 0) { //copied and pasted from above
-                                        System.out.println("Opponent used Haymaker");
+                                        System.out.println("Opponent used HAYMAKER !");
                                         System.out.print("\n");
 
                                         damageMultiplier = Attack.HayMaker.HayMakerMultiplier;
@@ -488,7 +417,7 @@ public class Battle {
                                     }
                                 break;
                                 case 2:
-                                    System.out.println("Opponent used Jab");
+                                    System.out.println("Opponent used JAB !");
                                         System.out.print("\n");
 
                                         damageMultiplier = Attack.Jab.jabMultiplier;
