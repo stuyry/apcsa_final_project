@@ -1,0 +1,19 @@
+package Code;
+
+// import Code.Abilities.Attack;
+
+public class OpponenetScratchSequence {
+
+    public void Scratch() {
+        System.out.println(
+                "Opponent used SCRATCH !");
+        System.out.print(
+                "\n");
+
+        Battle.damageMultiplier = Attack.Scratch.scratchMultipler;
+        Battle.isNormalAttack = true;
+        //character.setHP(protagonistHP.get() - 50);//(protagonistHP.get() - (int)(character.getDMG() * damageMultiplier));
+
+        new ApplyBasedOnLuck().applyBasedOnLuck();
+    }
+}

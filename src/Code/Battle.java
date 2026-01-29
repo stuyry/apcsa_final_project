@@ -1,23 +1,8 @@
 package Code;
 
-import Code.Abilities.Attack;
-import Code.Abilities.Magic;
-import Code.Util.CharacterSequences.CharacterHaymakerSequence;
-import Code.Util.CharacterSequences.CharacterJabSequence;
-import Code.Util.CharacterSequences.CharacterNauseaSequence;
-import Code.Util.CharacterSequences.CharacterPoisonSequence;
-import Code.Util.CharacterSequences.CharacterRecharge;
-import Code.Util.CharacterSequences.CharacterScratchSequence;
-import Code.Util.CharacterSequences.CharacterSkipTurn;
-import Code.Util.CharacterSequences.CharacterWeakenSeqeuence;
-import Code.Util.GetMultiplierValueBasedOnMagicAndDefense;
-import Code.Util.OpponenetSequences.OpponenetScratchSequence;
-import Code.Util.OpponenetSequences.OpponentHayMakerSequence;
-import Code.Util.OpponenetSequences.OpponentJabSequence;
-import Code.Util.OpponenetSequences.OpponentNauseaSequence;
-import Code.Util.OpponenetSequences.OpponentPoisonSequence;
-import Code.Util.OpponenetSequences.OpponentRechargeSequence;
-import Code.Util.OpponenetSequences.OpponentWeakenSequence;
+// import Code.Abilities.Attack;
+// import Code.Abilities.Magic;
+
 import java.util.function.Supplier;
 
 //Class made for ease of implementation
@@ -50,9 +35,9 @@ public class Battle {
 
     
 
-     public static long luckyLoopValue = 0; 
-     public static long randomHolder = 0; 
-     public static int readerHolder = 0; 
+    public static long luckyLoopValue = 0; 
+    public static long randomHolder = 0; 
+    public static int readerHolder = 0; 
 
     public static int characterPoisonMagicTurnHolder = 0;
     public static int characterWeakenMagicTurnHolder = 0;
@@ -188,7 +173,12 @@ public class Battle {
             }
                 
                 if (isNormalAttack && applyTurnHolder && (oppNauseaTurnHolder > 0  || oppWeakenTurnHolder > 0) && characterPoisonMagicTurnHolder < 1 && characterNauseaMagicTurnHolder < 1 && characterWeakenMagicTurnHolder < 1) {
-                    opp.setHP(antagonistHP.get() - (int)( (character.getDMG() - (oppWeakenTurnHolder * Magic.Weaken.lowerAtk)) * damageMultiplier * new GetMultiplierValueBasedOnMagicAndDefense().getDefenseMultiplier())); //FIXED ADDED LOWER SELF DEFENSE TO TS
+                    opp.setHP(antagonistHP.get() - (int)( (character.getDMG() - (oppWeakenTurnHolder * Magic.Weaken.lowerAtk)) * damageMultiplier * new GetMultiplierValueBasedOnMagicAndDefense().getDefenseMultiplier()));
+                    oppWeakenTurnHolder = 0; //RESETS SO THAT WEAKEN DOESN'T COMPILE FOR SOME REASON, even if opponent attacks
+                    oppNauseaTurnHolder = 0; //
+
+
+                    //FIXED ADDED LOWER SELF DEFENSE TO TS
                 }
                 else if (isNormalAttack && applyTurnHolder && characterPoisonMagicTurnHolder < 1 && characterNauseaMagicTurnHolder < 1 && characterWeakenMagicTurnHolder < 1) {//WHY I GET ERROR: applyTurnHolder becomes true at end all of the time, fixed??
                 //* new Attack().exampleAttack.getMultiplier()

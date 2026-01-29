@@ -10,7 +10,7 @@ public class Reader { //decided against making this abstract because when I am e
     //DONT NEED ANYMORE WITH THE METHODS IN MAIN
 
 
-    Main main = new Main();
+    //Main main = new Main();
 
     private final BufferedReader read;
     //Im not really accounting for nextLine in my code, but all of the inputs I am asking for are one liners, and I print something inbetween them if that makes sense
@@ -38,7 +38,7 @@ public class Reader { //decided against making this abstract because when I am e
         boolean retryAgain = true; //obv
         boolean isErrorMessage = false;  //obv
         
-        int amountOfCredits = (int) main.getCreditsFromMain(); //for simplicity
+        int amountOfCredits = (int) new Main().getCreditsFromMain(); //for simplicity
         //TODO: (RESOLVED) Make abstract and put in methods where we need to deal with integers that they input
         //Could've given it name of points given but I need to see how this project develops
         //while(retryAgain) {

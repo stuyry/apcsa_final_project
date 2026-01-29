@@ -1,11 +1,5 @@
 package Code;
 
-import Code.Points.DamagePoints;
-import Code.Points.DefensePoints;
-import Code.Points.HealthPoints;
-import Code.Points.LuckPoints;
-import Code.Points.MagicPoints;
-
 public class Opponent {
     static HealthPoints healthPoints = new HealthPoints(); //OBJECTS SO I CAN ACCESS STATES AND ACTUAL VALUES (obvious) (from main)
     static DamagePoints damagePoints = new DamagePoints();

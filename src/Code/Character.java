@@ -1,7 +1,5 @@
 package Code;
 
-import Code.Points.State;
-
 public class Character { //TODO: make this a interface
     private final String name;
     private long dmg;
